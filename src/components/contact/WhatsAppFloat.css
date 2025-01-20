@@ -1,0 +1,9 @@
+.whatsapp-float {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    z-index: 1000;
+    img{
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+    }
+}

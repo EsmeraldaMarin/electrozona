@@ -1,0 +1,8 @@
+.hidden-scrollbar {
+    overflow: auto; /* Permite el desplazamiento */
+    scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none; /* Oculta la barra de desplazamiento en Chrome, Edge y Safari */
+}
