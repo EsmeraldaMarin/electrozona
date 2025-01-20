@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/electrozona/static/css/main.9db6e5d2.css",
+    "main.js": "/electrozona/static/js/main.69e2fde6.js",
+    "index.html": "/electrozona/index.html",
+    "main.9db6e5d2.css.map": "/electrozona/static/css/main.9db6e5d2.css.map",
+    "main.69e2fde6.js.map": "/electrozona/static/js/main.69e2fde6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9db6e5d2.css",
+    "static/js/main.69e2fde6.js"
+  ]
+}
