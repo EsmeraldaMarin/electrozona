@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/product/${product.id}`);
+        navigate(`/electrozona/product/${product.id}`);
     };
     const formatPrice = (price) => {
         return new Intl.NumberFormat('es-AR', {
