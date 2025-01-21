@@ -1,46 +1,86 @@
-// ProductContainer.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FilterAndSort from '../filter/FilterAndSort';
 import ProductCard from './ProductCard';
+import { collection, query, orderBy, limit, startAfter, getDocs, where, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 const ProductContainer = () => {
-    const productosEjemplo = [
-        {
-            "id": 1,
-            "name": "Auriculares Bluetooth",
-            "description": "Auriculares inalámbricos con sonido envolvente y cancelación de ruido.",
-            "price": 15000,
-            "image": "https://acdn.mitiendanube.com/stores/001/827/432/products/wireless-5-3-242936fc6531af3c0417119866905367-1024-1024.png"
-        },
-        {
-            "id": 2,
-            "name": "Cargador Rápido USB-C",
-            "description": "Cargador rápido compatible con dispositivos Android y iOS.",
-            "price": 2500,
-            "image": "https://http2.mlstatic.com/D_NQ_NP_971539-MLA75699668616_042024-O.webp"
-        },
-        {
-            "id": 3,
-            "name": "Funda Protectora para Celular",
-            "description": "Funda resistente a impactos con diseño elegante.",
-            "price": 6000,
-            "image": "https://acdn.mitiendanube.com/stores/078/254/products/e0c35c68-f790-47c6-96fa-f901e4a4b1bf-22e3cfbb6b4b35fdc516632777463001-1024-1024.jpeg"
-        },
-        {
-            "id": 4,
-            "name": "Celular Android",
-            "description": "Smartphone con pantalla HD y batería de larga duración.",
-            "price": 800000,
-            "image": "https://pardohogar.vtexassets.com/arquivos/ids/185932/Celular-Samsung-Galaxy-A23-5G-128GB-50MP-Negro-1.jpg?v=638132074354770000"
+    const [products, setProducts] = useState([]);
+    const [lastVisible, setLastVisible] = useState(null); // Referencia al último producto visible
+    const [hasMore, setHasMore] = useState(true); // Controla si hay más productos para cargar
+    const [loading, setLoading] = useState(false);
+
+    const productsPerPage = 10; // Número de productos por página
+
+    // Función para cargar productos
+    const fetchProducts = async (isNextPage = false) => {
+        setLoading(true);
+
+        try {
+            // Crear la consulta
+            const productCollection = collection(db, "Productos");
+            let productQuery;
+
+            if (isNextPage && lastVisible) {
+                productQuery = query(
+                    productCollection,
+                    orderBy("codigo"), // Cambia el campo de ordenamiento si es necesario
+                    startAfter(lastVisible),
+                    limit(productsPerPage)
+                );
+            } else {
+                productQuery = query(
+                    productCollection,
+                    orderBy("codigo"),
+                    limit(productsPerPage)
+                );
+            }
+
+            const querySnapshot = await getDocs(productQuery);
+
+            if (!querySnapshot.empty) {
+                const newProducts = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setProducts((prev) => (isNextPage ? [...prev, ...newProducts] : newProducts));
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]); // Actualizar la referencia del último producto visible
+                setHasMore(newProducts.length === productsPerPage); // Verificar si hay más productos
+            } else {
+                setHasMore(false); // No hay más productos para cargar
+            }
+        } catch (error) {
+            console.error("Error al obtener productos:", error);
         }
-    ]
+
+        setLoading(false);
+    };
+
+    // Cargar la primera página al montar el componente
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
     return (
-        <div className="" >
+        <div className="">
             <FilterAndSort></FilterAndSort>
             <div className="contenedor d-flex flex-wrap justify-content-evenly">
-                {productosEjemplo.map(product =>
+                {products.map((product) => (
                     <ProductCard key={product.id} product={product}></ProductCard>
+                ))}
+            </div>
+            <div className="pagination d-flex justify-content-center mt-3">
+                {hasMore && !loading && (
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => fetchProducts(true)}
+                    >
+                        Cargar más
+                    </button>
                 )}
+                {loading && <p>Cargando...</p>}
+                {!hasMore && <p>No hay más productos.</p>}
             </div>
         </div>
     );

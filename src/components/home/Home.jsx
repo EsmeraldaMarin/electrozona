@@ -6,7 +6,7 @@ import Categories from '../filter/Categories';
 
 const Home = () => {
     return (
-        <div className="container p-0" style={{ marginTop: "80px" }}>
+        <div className="container p-0">
             <Carrousel></Carrousel>
             <Categories></Categories>
             <ProductContainer></ProductContainer>

@@ -1,8 +1,9 @@
 import React from 'react';
 import Cart from '../cart/Cart';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    console.log("navbar")
+
     return (
         <nav className="navbar navbar-dark fixed-top" style={{ backgroundColor: "#000" }}>
             <div className="container-fluid">
@@ -10,9 +11,9 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="navbar-brand m-0">
-                    <a href="#">
-                        <img style={{ width: '50px', height: '50px' }} src="/img/logo_electro.png" alt="logo electrozona" />
-                    </a>
+                    <Link to="/">
+                        <img style={{ width: '50px', height: '50px' }} src={process.env.PUBLIC_URL + '/img/logo_electro.png'} alt="logo electrozona" />
+                    </Link>
                 </div>
                 <Cart></Cart>
                 <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style={{ backgroundColor: "#000" }}>
