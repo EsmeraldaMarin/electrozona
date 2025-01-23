@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import { UseCart } from '../cart/CartContext';
 
 const ProductDetail = () => {
     const { id } = useParams(); // Obtiene el id del producto de la URL
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const { addItem } = UseCart();
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -46,9 +49,9 @@ const ProductDetail = () => {
     const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
     const handleAddToCart = () => {
-        // Aquí iría la lógica para agregar el producto al carrito
-        console.log(`Producto ${product.nombre} agregado al carrito con cantidad ${quantity}`);
+        addItem(product, quantity );
     };
+
 
     const handleWhatsapp = () => {
         const message = `¡Hola! Estoy interesado en el producto ${product.nombre}.`;
