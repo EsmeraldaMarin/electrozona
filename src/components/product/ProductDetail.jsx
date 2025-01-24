@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { UseCart } from '../cart/CartContext';
+import SkeletonLoader from '../loader/SkeletonLoader';
 
 const ProductDetail = () => {
     const { id } = useParams(); // Obtiene el id del producto de la URL
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const { addItem } = UseCart();
-
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -41,15 +42,22 @@ const ProductDetail = () => {
         }
     };
 
-    
-
-    if (!product) return <p>Cargando...</p>;
-
     const increaseQuantity = () => setQuantity(prev => prev + 1);
     const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
     const handleAddToCart = () => {
-        addItem(product, quantity );
+        addItem(product, quantity);
+        setNotification({
+            img: product.imagen,
+            name: product.nombre,
+            quantity,
+            price: product.precio * quantity,
+        });
+
+        // Ocultar la notificación después de 3 segundos
+        setTimeout(() => {
+            setNotification(null);
+        }, 3000);
     };
 
 
@@ -65,11 +73,35 @@ const ProductDetail = () => {
         }).format(price);
     };
 
+    if (!product) return <div className='p-4 mt-1'>
+        <SkeletonLoader height={"700px"}></SkeletonLoader>
+    </div>;
+
     return (
         <div className="product-detail p-4 text-start">
-            <h2 className='fw-bold fs-4'>{product.nombre}</h2>
+            <Link to={`/electrozona`} className='text-decoration-underline'>INICIO</Link>
+            <span className='mx-2'>{`>`}</span>
+            <Link to={`/electrozona/category/${product.categoria}`} className='text-decoration-underline'>{product.categoria}</Link>
 
-            <div id="carouselExampleIndicators" className="carousel slide carousel-dark shadow my-3" data-bs-ride="carousel">
+            <h2 className='fw-bold fs-4 mt-4'>{product.nombre}</h2>
+
+            {/* Notificación */}
+            {notification && (
+                <div className="notification position-fixed top-0 end-0 m-3 mt-5 p-3 bg-light shadow rounded" style={{ zIndex: "2000" }}>
+                    <p className="m-0"><strong>¡Producto agregado al carrito!</strong></p>
+                    <div className='d-flex mt-3'>
+                        <img src={notification.img} alt="" style={{ width: "60px", height: "60px", objectFit: "contain" }} />
+                        <div className='ms-2'>
+                            <p className="m-0">x{notification.quantity}</p>
+                            <p className="m-0">{notification.name}</p>
+                            <p className="m-0 fw-bold">{formatPrice(notification.price)}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+            <div id="carouselExampleIndicators" className="carousel slide carousel-dark shadow my-3 " data-bs-ride="carousel">
                 <div className="carousel-indicators">
                     {/* El primer indicador debe tener la clase 'active' */}
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>

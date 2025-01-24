@@ -4,6 +4,7 @@ import { collection, query, orderBy, limit, startAfter, getDocs, where } from "f
 import { db } from "../../firebaseConfig";
 import Categories from '../filter/Categories';
 import SkeletonLoader from '../loader/SkeletonLoader';
+import { useParams } from 'react-router-dom';
 
 const ProductContainer = () => {
     const [products, setProducts] = useState([]);
@@ -13,7 +14,9 @@ const ProductContainer = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    const productsPerPage = 10;
+    const {id} = useParams();
+    const categoria = id;
+    const productsPerPage = 20;
 
     // Función para cargar productos
     const fetchProducts = async (isNextPage = false) => {
@@ -24,14 +27,22 @@ const ProductContainer = () => {
             let productQuery;
 
             // Si hay categoría seleccionada, aplicamos el filtro
-            if (selectedCategory) {
+            if (selectedCategory && !categoria) {
                 productQuery = query(
                     productCollection,
                     where("categoria", "==", selectedCategory),
                     orderBy("precio"), // Ordenamos por precio
                     limit(productsPerPage)
                 );
-            } else {
+            } else if (!selectedCategory && categoria) {
+                productQuery = query(
+                    productCollection,
+                    where("categoria", "==", categoria),
+                    orderBy("precio"), // Ordenamos por precio
+                    limit(productsPerPage)
+                );
+            }
+            else {
                 productQuery = query(
                     productCollection,
                     orderBy("precio"),
@@ -100,15 +111,16 @@ const ProductContainer = () => {
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}
+
             </div>
 
             <div className="pagination d-flex justify-content-center">
                 {hasMore && !loading && (
-                    <button onClick={() => fetchProducts(true)}>Cargar más</button>
+                    <button onClick={() => fetchProducts(true)} className=' btn btn-secondary'>Cargar más</button>
                 )}
-                {loading && <div className="skeleton-grid">
+                {loading && <div className="skeleton-grid px-2">
                     {Array.from({ length: 10 }).map((_, index) => (
-                        <SkeletonLoader key={index} />
+                        <SkeletonLoader key={index} height={"300px"} />
                     ))}
                 </div>}
                 {!hasMore && <p>No hay más productos.</p>}

@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://EsmeraldaMarin.github.io/electrozona",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
     "firebase": "^11.2.0",
     "react": "^19.0.0",

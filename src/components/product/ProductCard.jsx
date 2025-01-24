@@ -6,7 +6,8 @@ const ProductCard = ({ product }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/electrozona/product/${product.id}/#`);
+        navigate(`/electrozona/product/${product.id}`);
+        window.scrollTo(0, 0); 
     };
     const formatPrice = (price) => {
         return new Intl.NumberFormat('es-AR', {
@@ -15,7 +16,7 @@ const ProductCard = ({ product }) => {
         }).format(price);
     };
     return (
-        <div className="card mb-2" style={{ width: '170px' }} onClick={handleClick}>
+        <div className="card mb-2" style={{ width: '48%' }} onClick={handleClick} id={product.id}>
             <img src={product.imagen[0]} className="card-img-top" alt={product.nombre} style={{minHeight:'168px', maxHeight:'168px', objectFit: 'contain'}}/>
             <div className="card-body">
                 <h5 className="card-title fs-6 fw-bolder" style={{fontFamily:"Kanit, sans-serif"}}>{product.nombre}</h5>

@@ -40,7 +40,7 @@ const CartContainer = () => {
 
                     <div>
                         <ListItemOnCart cart={cart} removeItem={removeItem} />
-                        <div className='totalCtn py-2 px-3 fw-bolder d-flex justify-content-between align-items-center mt-4' style={{ backgroundColor: "#b0b0b0", color: "#000" }}>
+                        <div className='totalCtn py-2 px-3 fw-bolder d-flex justify-content-between align-items-center mt-4' style={{ backgroundColor: "#f0f0f0", color: "#000" }}>
                             <span>TOTAL </span>
                             <span className='fs-3'>{formatPrice(totalAmount())}</span>
                         </div>
@@ -52,7 +52,7 @@ const CartContainer = () => {
                     :
                     <div className='emptyCart'>
                         <p>No hay productos en tu carrito</p>
-                        <Link to='/electrozona'>Ir a Inicio</Link>
+                        <Link to='/electrozona' className='text-decoration-underline'>Ir a Inicio</Link>
                     </div>}
 
             </div>

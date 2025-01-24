@@ -7,6 +7,7 @@ import WhatsAppFloat from './components/contact/WhatsAppFloat';
 import ProductDetail from './components/product/ProductDetail';
 import { CartProvider } from './components/cart/CartContext';
 import CartContainer from './components/cart/CartContainer';
+import ProductContainer from './components/product/ProductsContainer';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/electrozona" element={<Home />} />
             <Route path="/electrozona/carrito" element={<CartContainer />} />
             <Route path="/electrozona/product/:id" element={<ProductDetail />} />
+            <Route path="/electrozona/category/:id" element={<ProductContainer />} />
 
             <Route path="*" element={<Navigate to="/electrozona" replace />} />
           </Routes>
