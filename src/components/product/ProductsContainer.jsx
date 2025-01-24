@@ -3,6 +3,7 @@ import ProductCard from './ProductCard';
 import { collection, query, orderBy, limit, startAfter, getDocs, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Categories from '../filter/Categories';
+import SkeletonLoader from '../loader/SkeletonLoader';
 
 const ProductContainer = () => {
     const [products, setProducts] = useState([]);
@@ -75,18 +76,18 @@ const ProductContainer = () => {
 
     // Función para manejar cambios en el filtro por categoría
     const handleCategoryChange = (e) => {
-        if (e.target.classList.contains('categoriaActiva')){
+        if (e.target.classList.contains('categoriaActiva')) {
             // si entra aca es porque se hizo click en la categoria activa
             // esto se hace para quitar el filtro de categoria
             setSelectedCategory('');
             return
-        } 
+        }
         setSelectedCategory(e.target.textContent);
     };
 
     // Cargar productos y categorías al montar el componente
     useEffect(() => {
-        
+
         fetchProducts();
         fetchCategories();
     }, [selectedCategory]); // Dependemos de la categoría seleccionada para recargar los productos
@@ -105,7 +106,11 @@ const ProductContainer = () => {
                 {hasMore && !loading && (
                     <button onClick={() => fetchProducts(true)}>Cargar más</button>
                 )}
-                {loading && <p>Cargando...</p>}
+                {loading && <div className="skeleton-grid">
+                    {Array.from({ length: 10 }).map((_, index) => (
+                        <SkeletonLoader key={index} />
+                    ))}
+                </div>}
                 {!hasMore && <p>No hay más productos.</p>}
             </div>
         </div>
