@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FilterAndSort = ({ products, onFilterAndSort }) => {
+const FilterAndSort = ({ onFilterAndSort }) => {
     const [filterText, setFilterText] = useState('');
     const [sortCriteria, setSortCriteria] = useState('');
 

@@ -2,7 +2,7 @@ import './App.css';
 import Footer from './components/footer/Footer';
 import Home from './components/home/Home';
 import Navbar from './components/navbar/Navbar';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import WhatsAppFloat from './components/contact/WhatsAppFloat';
 import ProductDetail from './components/product/ProductDetail';
 import { CartProvider } from './components/cart/CartContext';
@@ -21,6 +21,8 @@ function App() {
             <Route path="/electrozona" element={<Home />} />
             <Route path="/electrozona/carrito" element={<CartContainer />} />
             <Route path="/electrozona/product/:id" element={<ProductDetail />} />
+
+            <Route path="*" element={<Navigate to="/electrozona" replace />} />
           </Routes>
 
           <Footer />

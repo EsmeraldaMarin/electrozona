@@ -1,39 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import FilterAndSort from '../filter/FilterAndSort';
 import ProductCard from './ProductCard';
-import { collection, query, orderBy, limit, startAfter, getDocs, where, deleteDoc, doc } from "firebase/firestore";
+import { collection, query, orderBy, limit, startAfter, getDocs, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import Categories from '../filter/Categories';
 
 const ProductContainer = () => {
     const [products, setProducts] = useState([]);
-    const [lastVisible, setLastVisible] = useState(null); // Referencia al último producto visible
-    const [hasMore, setHasMore] = useState(true); // Controla si hay más productos para cargar
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [lastVisible, setLastVisible] = useState(null);
+    const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    const productsPerPage = 10; // Número de productos por página
+    const productsPerPage = 10;
 
     // Función para cargar productos
     const fetchProducts = async (isNextPage = false) => {
         setLoading(true);
 
         try {
-            // Crear la consulta
             const productCollection = collection(db, "Productos");
             let productQuery;
 
-            if (isNextPage && lastVisible) {
+            // Si hay categoría seleccionada, aplicamos el filtro
+            if (selectedCategory) {
                 productQuery = query(
                     productCollection,
-                    orderBy("codigo"), // Cambia el campo de ordenamiento si es necesario
-                    startAfter(lastVisible),
+                    where("categoria", "==", selectedCategory),
+                    orderBy("precio"), // Ordenamos por precio
                     limit(productsPerPage)
                 );
             } else {
                 productQuery = query(
                     productCollection,
-                    orderBy("codigo"),
+                    orderBy("precio"),
                     limit(productsPerPage)
                 );
+            }
+            if (isNextPage && lastVisible) {
+                productQuery = query(productQuery, startAfter(lastVisible));
             }
 
             const querySnapshot = await getDocs(productQuery);
@@ -43,12 +48,11 @@ const ProductContainer = () => {
                     id: doc.id,
                     ...doc.data(),
                 }));
-
                 setProducts((prev) => (isNextPage ? [...prev, ...newProducts] : newProducts));
-                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]); // Actualizar la referencia del último producto visible
-                setHasMore(newProducts.length === productsPerPage); // Verificar si hay más productos
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
+                setHasMore(newProducts.length === productsPerPage);
             } else {
-                setHasMore(false); // No hay más productos para cargar
+                setHasMore(false);
             }
         } catch (error) {
             console.error("Error al obtener productos:", error);
@@ -57,27 +61,49 @@ const ProductContainer = () => {
         setLoading(false);
     };
 
-    // Cargar la primera página al montar el componente
+    // Función para cargar las categorías
+    const fetchCategories = async () => {
+        try {
+            const categoryCollection = collection(db, "Categorias");
+            const querySnapshot = await getDocs(categoryCollection);
+            const categoryList = querySnapshot.docs.map(doc => doc.data().nombre); // Suponiendo que el campo de nombre de categoría es "name"
+            setCategories(categoryList);
+        } catch (error) {
+            console.error("Error al obtener categorías:", error);
+        }
+    };
+
+    // Función para manejar cambios en el filtro por categoría
+    const handleCategoryChange = (e) => {
+        if (e.target.classList.contains('categoriaActiva')){
+            // si entra aca es porque se hizo click en la categoria activa
+            // esto se hace para quitar el filtro de categoria
+            setSelectedCategory('');
+            return
+        } 
+        setSelectedCategory(e.target.textContent);
+    };
+
+    // Cargar productos y categorías al montar el componente
     useEffect(() => {
+        
         fetchProducts();
-    }, []);
+        fetchCategories();
+    }, [selectedCategory]); // Dependemos de la categoría seleccionada para recargar los productos
 
     return (
-        <div className="">
-            <FilterAndSort></FilterAndSort>
-            <div className="contenedor d-flex flex-wrap justify-content-evenly">
+        <div className="product-container">
+            {categories && <Categories categorias={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange}></Categories>}
+
+            <div className="product-list d-flex flex-wrap justify-content-between px-2">
                 {products.map((product) => (
-                    <ProductCard key={product.id} product={product}></ProductCard>
+                    <ProductCard key={product.id} product={product} />
                 ))}
             </div>
-            <div className="pagination d-flex justify-content-center mt-3">
+
+            <div className="pagination d-flex justify-content-center">
                 {hasMore && !loading && (
-                    <button
-                        className="btn btn-secondary"
-                        onClick={() => fetchProducts(true)}
-                    >
-                        Cargar más
-                    </button>
+                    <button onClick={() => fetchProducts(true)}>Cargar más</button>
                 )}
                 {loading && <p>Cargando...</p>}
                 {!hasMore && <p>No hay más productos.</p>}

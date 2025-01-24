@@ -11,7 +11,7 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="navbar-brand m-0">
-                    <Link to="/electrozona/">
+                    <Link to="/electrozona/#">
                         <img style={{ width: '50px', height: '50px' }} src={process.env.PUBLIC_URL + '/img/logo_electro.png'} alt="logo electrozona" />
                     </Link>
                 </div>

@@ -1,17 +1,18 @@
 import React from 'react';
 import "./Categories.css"
-const Categories = () => {
+const Categories = ({ categorias, selectedCategory, handleCategoryChange }) => {
 
-    const categorias = ["Celulares", "Auriculares", "Parlantes", "Teclados", "Mouses"]
     return (
-        <div className="d-flex mt-3 hidden-scrollbar">
-            {categorias.map((cat, index) =>
+        <div className="d-flex mt-3 hidden-scrollbar mb-3 px-2">
+            {categorias?.map((cat, index) =>
                 <div key={index}
-                    className='px-3 py-1 me-2 text-uppercase'
-                    style={{ backgroundColor: "#ddd", fontSize:"14px"}}
+                    onClick={(e) => { handleCategoryChange(e) }}
+                    className={selectedCategory === cat ? 'px-3 py-1 me-2 text-uppercase text-nowrap categoriaActiva' : 'px-3 py-1 me-2 text-uppercase text-nowrap'}
+            style={{ backgroundColor: "#ddd", fontSize: "14px" }}
                 >{cat}</div>
-            )}
-        </div>
+    )
+}
+        </div >
     );
 };
 
