@@ -79,9 +79,9 @@ const ProductDetail = () => {
 
     return (
         <div className="product-detail p-4 text-start">
-            <Link to={`/electrozona`} className='text-decoration-underline'>INICIO</Link>
-            <span className='mx-2'>{`>`}</span>
-            <Link to={`/electrozona/category/${product.categoria}`} className='text-decoration-underline'>{product.categoria}</Link>
+            <Link to={`/electrozona`} className='text-decoration-none text-black'>INICIO</Link>
+            <span className='mx-2'>{`/`}</span>
+            <Link to={`/electrozona/category/${product.categoria}`} className='text-decoration-none text-black'>{product.categoria}</Link>
 
             <h2 className='fw-bold fs-4 mt-4'>{product.nombre}</h2>
 
@@ -155,7 +155,7 @@ const ProductDetail = () => {
                 <button className="ms-3 btn rounded-0" style={{ width: "100%", backgroundColor: '#000', color: '#fff' }} onClick={handleAddToCart}><i className='bi bi-cart'></i> Agregar al carrito</button>
             </div>
 
-            <p className='fs-1 fw-bold my-4' style={{ color: "#505050", lineHeight: "1em" }}>Contactate con nosotros para realizar la compra!</p>
+            <p className='fs-1 fw-bold my-4' style={{ color: "#505050", lineHeight: "1em" }}>¡Contactate con nosotros para realizar la compra!</p>
             <button className="btn rounded-0 btn-success" onClick={handleWhatsapp}> <i className='bi bi-whatsapp'></i> Contactar por WhatsApp</button>
 
             <p className='mt-3'><strong>Características del producto:</strong></p>

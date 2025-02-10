@@ -8,7 +8,7 @@ const Categories = ({ categorias, selectedCategory, handleCategoryChange }) => {
                 <div key={index}
                     onClick={(e) => { handleCategoryChange(e) }}
                     className={selectedCategory === cat ? 'px-3 py-1 me-2 text-uppercase text-nowrap categoriaActiva' : 'px-3 py-1 me-2 text-uppercase text-nowrap'}
-            style={{ backgroundColor: "#ddd", fontSize: "14px" }}
+            style={{ backgroundColor: "#ddd", fontSize: "14px", cursor:"pointer" }}
                 >{cat}</div>
     )
 }

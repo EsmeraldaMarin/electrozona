@@ -4,7 +4,7 @@ import { collection, query, orderBy, limit, startAfter, getDocs, where } from "f
 import { db } from "../../firebaseConfig";
 import Categories from '../filter/Categories';
 import SkeletonLoader from '../loader/SkeletonLoader';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const ProductContainer = () => {
     const [products, setProducts] = useState([]);
@@ -14,7 +14,7 @@ const ProductContainer = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    const {id} = useParams();
+    const { id } = useParams();
     const categoria = id;
     const productsPerPage = 20;
 
@@ -105,7 +105,13 @@ const ProductContainer = () => {
 
     return (
         <div className="product-container">
-            {categories && <Categories categorias={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange}></Categories>}
+            {(categories && !categoria) ?
+                <Categories categorias={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange}></Categories> :
+                <div className='my-4 px-3 d-flex justify-content-between'>
+                    <Link to={"/electrozona"} className='text-black text-start d-inline-block '>Inicio</Link>
+                    <h4>{categoria}</h4>
+                </div>
+            }
 
             <div className="product-list d-flex flex-wrap justify-content-between px-2">
                 {products.map((product) => (

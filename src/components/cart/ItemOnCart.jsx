@@ -24,8 +24,8 @@ const itemOnCart = ({ item, removeItem }) => {
 
             <img className='me-3 border' src={item.imagen[0]} alt={item.nombre} style={{ width: "90px", height: "90px", objectFit: "contain" }} />
             <div className='d-flex flex-column justify-content-between align-items-start' style={{ width: "100%" }}>
-                <Link to={`/electrozona/product/${item.id}`} >
-                    <p className='m-0 text-start' style={{ fontSize: "16px" }}>{item.nombre}</p>
+                <Link className='text-decoration-none' to={`/electrozona/product/${item.id}`} >
+                    <p className='m-0 text-start text-black' style={{ fontSize: "16px" }}>{item.nombre}</p>
                 </Link>
                 <div className='d-flex justify-content-between' style={{width:"100%"}}>
                     <ItemCountSimple stock={item.cantidad} initial={item.quantity} onAdd={updateItemOnCartFunction} item={item} />
