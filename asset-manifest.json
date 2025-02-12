@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/electrozona/static/css/main.0855919d.css",
-    "main.js": "/electrozona/static/js/main.b9e8b8ab.js",
+    "main.css": "/electrozona/static/css/main.effde33e.css",
+    "main.js": "/electrozona/static/js/main.039c6b1a.js",
     "index.html": "/electrozona/index.html",
-    "main.0855919d.css.map": "/electrozona/static/css/main.0855919d.css.map",
-    "main.b9e8b8ab.js.map": "/electrozona/static/js/main.b9e8b8ab.js.map"
+    "main.effde33e.css.map": "/electrozona/static/css/main.effde33e.css.map",
+    "main.039c6b1a.js.map": "/electrozona/static/js/main.039c6b1a.js.map"
   },
   "entrypoints": [
-    "static/css/main.0855919d.css",
-    "static/js/main.b9e8b8ab.js"
+    "static/css/main.effde33e.css",
+    "static/js/main.039c6b1a.js"
   ]
 }
