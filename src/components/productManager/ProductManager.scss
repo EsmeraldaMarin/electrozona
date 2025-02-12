@@ -1,0 +1,64 @@
+.product-manager {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    select {
+        width: 300px;
+        margin: 10px 0;
+        margin-left: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .table-ctn {
+        border-radius: 10px;
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            overflow: hidden;
+
+            th,
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                text-align: left;
+            }
+
+            th {
+                background-color: #333;
+                color: white;
+            }
+
+            img {
+                width: 50px;
+                height: 50px !important;
+                object-fit: cover;
+                height: auto;
+                border-radius: 5px;
+            }
+            button.btn {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                min-width: 110px;
+                max-width: 110px;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .desktop-only {
+            display: none;
+        }
+    }
+}

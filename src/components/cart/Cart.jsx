@@ -1,6 +1,7 @@
 import React from 'react';
 import { UseCart } from './CartContext';
 import { Link } from 'react-router-dom';
+import './Cart.scss'
 
 const Cart = () => {
     const { totalQuantity } = UseCart(); // Obtén la función para obtener el total de ítems

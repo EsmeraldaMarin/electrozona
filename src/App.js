@@ -10,6 +10,7 @@ import CartContainer from './components/cart/CartContainer';
 import ProductContainer from './components/product/ProductsContainer';
 import Login from './components/login/Login';
 import ProtectedRoute from './components/login/ProtectedRoute';
+import ProductManager from './components/productManager/ProductManager';
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
 
           <Routes>
             <Route path="/electrozona/admin" element={<ProtectedRoute />}>
-              <Route index element={<div>Admin panel component</div>} />
+              <Route index element={<ProductManager></ProductManager>} />
             </Route>
             <Route path="/electrozona" element={<Home />} />
             <Route path="/electrozona/login" element={<Login />} />

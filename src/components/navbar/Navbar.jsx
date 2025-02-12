@@ -3,6 +3,7 @@ import Cart from '../cart/Cart';
 import { Link } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import "./Navbar.scss"
 
 const Navbar = () => {
     const [categories, setCategories] = useState([]);
@@ -31,24 +32,9 @@ const Navbar = () => {
         return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     };
 
-    // Función para cerrar el menú offcanvas
-    const handleCloseMenu = () => {
-        const offcanvasElement = document.getElementById('offcanvasNavbar');
-        const offcanvasInstance = window.bootstrap.Offcanvas.getInstance(offcanvasElement);
-        if (offcanvasInstance) {
-            offcanvasInstance.hide();
-        }
-        // Forzar la eliminación de la clase 'show' y el fondo oscuro
-        offcanvasElement.classList.remove('show');
-        document.body.classList.remove('offcanvas-open'); // Esto elimina el fondo oscuro (overlay)
-        const backdrop = document.querySelectorAll('.offcanvas-backdrop');
-        backdrop.forEach(bd=>{
-            bd.remove()
-        })
-    };
 
     return (
-        <nav className="navbar navbar-dark fixed-top" style={{ backgroundColor: "#000" }}>
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top" >
             <div className="container-fluid">
                 <button
                     className="navbar-toggler"
@@ -69,7 +55,6 @@ const Navbar = () => {
                         />
                     </Link>
                 </div>
-                <Cart />
                 <div
                     className="offcanvas offcanvas-start"
                     tabIndex="-1"
@@ -95,29 +80,45 @@ const Navbar = () => {
                     </div>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3 text-start ps-3">
-                            <li className="nav-item">
+                            <li
+                                data-bs-dismiss="offcanvas"
+                                className="nav-item">
                                 <Link
                                     className="nav-link active"
                                     to="/electrozona"
-                                    onClick={handleCloseMenu}
                                 >
                                     Inicio
                                 </Link>
                             </li>
-                            {categories.map((categoria) => (
-                                <li className="nav-item" key={categoria.id}>
+                            {categories.map((categoria) =>
+                            (
+                                <li
+                                    data-bs-dismiss="offcanvas"
+                                    className="nav-item" key={categoria.id}>
                                     <Link
                                         className="nav-link"
                                         to={`/electrozona/category/${categoria.id}`}
-                                        onClick={handleCloseMenu} // Cierra el menú al hacer clic
                                     >
                                         {capitalize(categoria.nombre)}
                                     </Link>
                                 </li>
-                            ))}
+                            )
+                            )}
+                            <li
+                                data-bs-dismiss="offcanvas"
+                                className="nav-item login" >
+                                <Link
+                                    className="nav-lin"
+                                    to={`/electrozona/login`}
+                                >
+                                    Iniciar Sesión <i className="ms-2 bi bi-box-arrow-in-left"></i>
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
+                <Cart />
+
             </div>
         </nav>
     );

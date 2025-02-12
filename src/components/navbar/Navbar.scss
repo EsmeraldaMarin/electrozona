@@ -1,0 +1,35 @@
+nav.navbar {
+    background-color: #000;
+    .offcanvas-body{
+        li{
+            &.login{
+                margin-top: 20px;
+            }
+            a{
+                color: white !important;
+            }
+        }
+    }
+    @media (min-width: 990px) {
+        .offcanvas-body {
+            li {
+                display: none;
+                border-bottom: 2px solid #000;
+                &.login{
+                    margin-top: 5px;
+                    margin-left: 30px;
+                    margin-right: 30px;
+                    display: flex;
+                }
+                &:hover {
+                    border-bottom: 2px solid white;
+                }
+                a {
+                    font-size: 13px;
+                    text-transform: uppercase;
+                    color: white !important;
+                }
+            }
+        }
+    }
+}

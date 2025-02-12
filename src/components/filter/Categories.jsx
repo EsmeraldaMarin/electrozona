@@ -1,17 +1,24 @@
 import React from 'react';
 import "./Categories.css"
-const Categories = ({ categorias, selectedCategory, handleCategoryChange }) => {
-
+import { Link } from 'react-router-dom';
+const Categories = ({ categorias }) => {
     return (
-        <div className="d-flex mt-3 hidden-scrollbar mb-3 px-2">
+        <div className="mt-3 mb-3 categorias-ctn">
             {categorias?.map((cat, index) =>
-                <div key={index}
-                    onClick={(e) => { handleCategoryChange(e) }}
-                    className={selectedCategory === cat ? 'px-3 py-1 me-2 text-uppercase text-nowrap categoriaActiva' : 'px-3 py-1 me-2 text-uppercase text-nowrap'}
-            style={{ backgroundColor: "#ddd", fontSize: "14px", cursor:"pointer" }}
-                >{cat}</div>
-    )
-}
+                <Link
+                    className='categoria-card'
+                    key={index}
+                    to={'/electrozona/category/' + cat.nombre}
+                >
+                    <div
+                        className={`py-1 text-uppercase text-wrap d-flex flex-column justify-content-center align-items-center`}
+                        style={{ fontSize: "14px", cursor: "pointer" }}
+                    >
+                        <img src={cat.imagen} alt={"imagen de " + cat.nombre} />
+                        {cat.nombre}</div>
+                </Link>
+            )
+            }
         </div >
     );
 };

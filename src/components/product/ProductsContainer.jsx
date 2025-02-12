@@ -5,11 +5,11 @@ import { db } from "../../firebaseConfig";
 import Categories from '../filter/Categories';
 import SkeletonLoader from '../loader/SkeletonLoader';
 import { Link, useParams } from 'react-router-dom';
+import "./Product.scss"
 
 const ProductContainer = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
     const [lastVisible, setLastVisible] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -21,32 +21,23 @@ const ProductContainer = () => {
     // Función para cargar productos
     const fetchProducts = async (isNextPage = false) => {
         setLoading(true);
-
         try {
             const productCollection = collection(db, "Productos");
             let productQuery;
 
-            // Si hay categoría seleccionada, aplicamos el filtro
-            if (selectedCategory && !categoria) {
-                productQuery = query(
-                    productCollection,
-                    where("categoria", "==", selectedCategory),
-                    orderBy("precio"), // Ordenamos por precio
-                    limit(productsPerPage)
-                );
-            } else if (!selectedCategory && categoria) {
+            if (categoria) {
                 productQuery = query(
                     productCollection,
                     where("categoria", "==", categoria),
                     orderBy("precio"), // Ordenamos por precio
-                    limit(productsPerPage)
+                    //limit(productsPerPage)
                 );
             }
             else {
                 productQuery = query(
                     productCollection,
                     orderBy("precio"),
-                    limit(productsPerPage)
+                    //limit(productsPerPage)
                 );
             }
             if (isNextPage && lastVisible) {
@@ -78,47 +69,54 @@ const ProductContainer = () => {
         try {
             const categoryCollection = collection(db, "Categorias");
             const querySnapshot = await getDocs(categoryCollection);
-            const categoryList = querySnapshot.docs.map(doc => doc.data().nombre); // Suponiendo que el campo de nombre de categoría es "name"
+            const categoryList = querySnapshot.docs.map(doc => doc.data()); // Suponiendo que el campo de nombre de categoría es "name"
             setCategories(categoryList);
         } catch (error) {
             console.error("Error al obtener categorías:", error);
         }
     };
 
-    // Función para manejar cambios en el filtro por categoría
-    const handleCategoryChange = (e) => {
-        if (e.target.classList.contains('categoriaActiva')) {
-            // si entra aca es porque se hizo click en la categoria activa
-            // esto se hace para quitar el filtro de categoria
-            setSelectedCategory('');
-            return
-        }
-        setSelectedCategory(e.target.textContent);
-    };
-
+    const filtrarProductosPorCategoria = (categoria) => {
+        console.log(products.length, categoria)
+        return products.filter(p => p.categoria === categoria);
+    }
     // Cargar productos y categorías al montar el componente
     useEffect(() => {
 
         fetchProducts();
         fetchCategories();
-    }, [selectedCategory]); // Dependemos de la categoría seleccionada para recargar los productos
+    }, [id]); // Dependemos de la categoría seleccionada para recargar los productos
 
     return (
         <div className="product-container">
             {(categories && !categoria) ?
-                <Categories categorias={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange}></Categories> :
-                <div className='my-4 px-3 d-flex justify-content-between'>
-                    <Link to={"/electrozona"} className='text-black text-start d-inline-block '>Inicio</Link>
-                    <h4>{categoria}</h4>
+                <Categories categorias={categories}></Categories> :
+                <div className='my-4 px-3 d-flex justify-content-between align-items-center header-by-category'>
+                    <Link to={"/electrozona"} className='btn btn-secondary text-light text-start d-inline-block '>Inicio</Link>
+                    <h4 className='m-0'>{categoria}</h4>
                 </div>
             }
 
-            <div className="product-list d-flex flex-wrap justify-content-between px-2">
-                {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
+            {(categories.length > 0 && !categoria) &&
+                categories.map((categoria) =>
+                    <div key={categoria.nombre} className='section-ctn'>
+                        <Link to={'/electrozona/category/' + categoria.nombre} className='categoria-banner'>{categoria.nombre}</Link>
+                        <Link to={'/electrozona/category/' + categoria.nombre} className='vertodos'>Ver todos</Link>
+                        <div className="product-list hidden-scrollbar">
+                            {filtrarProductosPorCategoria(categoria.nombre).map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))}
+                        </div>
+                    </div>
+                )
 
-            </div>
+            }
+
+            {categoria &&
+                <div className='product-list-by-category'>
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}</div>}
 
             <div className="pagination d-flex justify-content-center">
                 {hasMore && !loading && (
@@ -129,7 +127,6 @@ const ProductContainer = () => {
                         <SkeletonLoader key={index} height={"300px"} />
                     ))}
                 </div>}
-                {!hasMore && <p>No hay más productos.</p>}
             </div>
         </div>
     );

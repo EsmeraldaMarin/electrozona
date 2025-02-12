@@ -78,13 +78,7 @@ const ProductDetail = () => {
     </div>;
 
     return (
-        <div className="product-detail p-4 text-start">
-            <Link to={`/electrozona`} className='text-decoration-none text-black'>INICIO</Link>
-            <span className='mx-2'>{`/`}</span>
-            <Link to={`/electrozona/category/${product.categoria}`} className='text-decoration-none text-black'>{product.categoria}</Link>
-
-            <h2 className='fw-bold fs-4 mt-4'>{product.nombre}</h2>
-
+        <div className="product-detail text-start">
             {/* Notificación */}
             {notification && (
                 <div className="notification position-fixed top-0 end-0 m-3 mt-5 p-3 bg-light shadow rounded" style={{ zIndex: "2000" }}>
@@ -100,71 +94,86 @@ const ProductDetail = () => {
                 </div>
             )}
 
+            <div className='product-detail-principal'>
 
-            <div id="carouselExampleIndicators" className="carousel slide carousel-dark shadow my-3 " data-bs-ride="carousel">
-                <div className="carousel-indicators">
-                    {/* El primer indicador debe tener la clase 'active' */}
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                    {/* Aquí generamos los botones de los indicadores a partir de product.imagen */}
-                    {product.imagen.map((imagen, index) => {
-                        if (index === 0) return null; // El primer indicador ya está creado
-                        return (
-                            <button
-                                key={index} // Es importante agregar una key única para cada elemento
-                                type="button"
-                                data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide-to={index}
-                                aria-label={"Slide " + (index + 1)}
-                            ></button>
-                        );
-                    })}
+                <Link to={`/electrozona`} className='text-decoration-underline text-black'>INICIO</Link>
+                <span className='mx-2'>{`/`}</span>
+                <Link to={`/electrozona/category/${product.categoria}`} className='text-decoration-underline text-black'>{product.categoria}</Link>
+
+                <h2 className='fw-bold fs-4 mt-4'>{product.nombre}</h2>
+
+
+
+                <div id="carouselExampleIndicators" className="carousel slide carousel-dark shadow my-3 " data-bs-ride="carousel">
+                    <div className="carousel-indicators">
+                        {/* El primer indicador debe tener la clase 'active' */}
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+                        {/* Aquí generamos los botones de los indicadores a partir de product.imagen */}
+                        {product.imagen.map((imagen, index) => {
+                            if (index === 0) return null; // El primer indicador ya está creado
+                            return (
+                                <button
+                                    key={index} // Es importante agregar una key única para cada elemento
+                                    type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to={index}
+                                    aria-label={"Slide " + (index + 1)}
+                                ></button>
+                            );
+                        })}
+                    </div>
+
+                    <div className="carousel-inner" style={{ maxHeight: "270px", minHeight: "270px" }}>
+                        {/* Solo el primer elemento debe tener la clase 'active' */}
+                        {product.imagen.map((imagen, index) => (
+                            <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
+                                <img style={{ maxHeight: "270px", minHeight: "270px", objectFit: "contain" }} src={imagen} className="d-block w-100" alt={product.nombre} />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Flechas de navegación */}
+                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Previous</span>
+                    </button>
+                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <p className='fs-4 fw-bold'>{product.descripcion}</p>
+            </div>
+            <div className='product-detail-data'>
+                <p className='desc fs-2 fw-bold'>{product.descripcion}</p>
+                <p className='fw-bold fs-1'><strong>{formatPrice(product.precio)}</strong></p>
+                <div className="quantity-control d-flex align-items-center justify-content-start">
+                    <button className="btn rounded-0" onClick={decreaseQuantity} style={{ backgroundColor: '#000', color: '#fff' }}>
+                        -
+                    </button>
+                    <span className="mx-3" style={{ fontSize: '1.3rem', fontFamily: "Outfit, sans-serif" }}>
+                        {quantity}
+                    </span>
+                    <button className="btn rounded-0" onClick={increaseQuantity} style={{ backgroundColor: '#000', color: '#fff' }}>
+                        +
+                    </button>
+                    <button className="ms-3 btn rounded-0" style={{ width: "100%", backgroundColor: '#000', color: '#fff' }} onClick={handleAddToCart}><i className='bi bi-cart'></i> Agregar al carrito</button>
                 </div>
 
-                <div className="carousel-inner" style={{ maxHeight: "270px", minHeight: "270px" }}>
-                    {/* Solo el primer elemento debe tener la clase 'active' */}
-                    {product.imagen.map((imagen, index) => (
-                        <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
-                            <img style={{ maxHeight: "270px", minHeight: "270px", objectFit: "contain" }} src={imagen} className="d-block w-100" alt={product.nombre} />
-                        </div>
-                    ))}
+                <p className='fs-1 fw-bold my-4' style={{ color: "#505050", lineHeight: "1em" }}>¡Contactate con nosotros para realizar la compra!</p>
+                <button className="btn rounded-0 btn-success" onClick={handleWhatsapp}> <i className='bi bi-whatsapp'></i> Contactar por WhatsApp</button>
+
+            </div>
+
+            <div className='product-detail-more'>
+                <p className='mt-3'><strong>Características del producto:</strong></p>
+                <p>{product.caracteristicas}</p>
+
+                <div className='d-flex flex-column align-items-center p-3' style={{ backgroundColor: "#e0e0e0" }}>
+                    <i className='bi bi-truck' style={{ fontSize: "2em" }}></i>
+                    <p className='text-uppercase fw-bold m-0'>Enviamos tu compra</p>
+                    <p className='m-0'>Entregas a todo el pais</p>
                 </div>
-
-                {/* Flechas de navegación */}
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
-                </button>
-            </div>
-            <p>{product.descripcion}</p>
-
-            <p className='fw-bold fs-1'><strong>{formatPrice(product.precio)}</strong></p>
-            <div className="quantity-control d-flex align-items-center justify-content-start">
-                <button className="btn rounded-0" onClick={decreaseQuantity} style={{ backgroundColor: '#000', color: '#fff' }}>
-                    -
-                </button>
-                <span className="mx-3" style={{ fontSize: '1.3rem', fontFamily: "Outfit, sans-serif" }}>
-                    {quantity}
-                </span>
-                <button className="btn rounded-0" onClick={increaseQuantity} style={{ backgroundColor: '#000', color: '#fff' }}>
-                    +
-                </button>
-                <button className="ms-3 btn rounded-0" style={{ width: "100%", backgroundColor: '#000', color: '#fff' }} onClick={handleAddToCart}><i className='bi bi-cart'></i> Agregar al carrito</button>
-            </div>
-
-            <p className='fs-1 fw-bold my-4' style={{ color: "#505050", lineHeight: "1em" }}>¡Contactate con nosotros para realizar la compra!</p>
-            <button className="btn rounded-0 btn-success" onClick={handleWhatsapp}> <i className='bi bi-whatsapp'></i> Contactar por WhatsApp</button>
-
-            <p className='mt-3'><strong>Características del producto:</strong></p>
-            <p>{product.caracteristicas}</p>
-
-            <div className='d-flex flex-column align-items-center p-3' style={{ backgroundColor: "#e0e0e0" }}>
-                <i className='bi bi-truck' style={{ fontSize: "2em" }}></i>
-                <p className='text-uppercase fw-bold m-0'>Enviamos tu compra</p>
-                <p className='m-0'>Entregas a todo el pais</p>
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Carrousel.scss"
 const Carrousel = () => {
     return (
         <div id="carousel" className="carousel slide">

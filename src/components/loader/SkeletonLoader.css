@@ -45,3 +45,10 @@
     gap: 16px;
     width: 100%;
 }
+
+@media (min-width: 990px) {
+    .skeleton-grid {
+        padding: 0 100px;
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
