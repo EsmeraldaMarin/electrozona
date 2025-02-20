@@ -6,6 +6,7 @@ import Categories from '../filter/Categories';
 import SkeletonLoader from '../loader/SkeletonLoader';
 import { Link, useParams } from 'react-router-dom';
 import "./Product.scss"
+import ProductSection from './ProductsSection';
 
 const ProductContainer = () => {
     const [products, setProducts] = useState([]);
@@ -77,7 +78,6 @@ const ProductContainer = () => {
     };
 
     const filtrarProductosPorCategoria = (categoria) => {
-        console.log(products.length, categoria)
         return products.filter(p => p.categoria === categoria);
     }
     // Cargar productos y categorías al montar el componente
@@ -98,18 +98,7 @@ const ProductContainer = () => {
             }
 
             {(categories.length > 0 && !categoria) &&
-                categories.map((categoria) =>
-                    <div key={categoria.nombre} className='section-ctn'>
-                        <Link to={'/electrozona/category/' + categoria.nombre} className='categoria-banner'>{categoria.nombre}</Link>
-                        <Link to={'/electrozona/category/' + categoria.nombre} className='vertodos'>Ver todos</Link>
-                        <div className="product-list hidden-scrollbar">
-                            {filtrarProductosPorCategoria(categoria.nombre).map((product) => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
-                        </div>
-                    </div>
-                )
-
+                <ProductSection categories={categories} filtrarProductosPorCategoria={filtrarProductosPorCategoria}></ProductSection>
             }
 
             {categoria &&

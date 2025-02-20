@@ -47,11 +47,12 @@
 }
 @media (min-width: 990px) {
     .categorias-ctn {
-        padding: 0px 200px;
+        padding: 0px ;
+        margin: 0 auto;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
     }
     .categoria-card {
-        width: 370px;
+        width: auto;
     }
 }

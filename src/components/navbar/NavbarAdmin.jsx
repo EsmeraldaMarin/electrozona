@@ -5,7 +5,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import "./Navbar.scss"
 
-const Navbar = () => {
+const NavbarAdmin = () => {
     const [categories, setCategories] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -89,12 +89,22 @@ const Navbar = () => {
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3 text-start ps-3">
                             <li
                                 data-bs-dismiss="offcanvas"
+                                className="nav-item me-3">
+                                <Link
+                                    className="nav-link active"
+                                    to="/electrozona/admin"
+                                >
+                                    Gestión de Productos
+                                </Link>
+                            </li>
+                            <li
+                                data-bs-dismiss="offcanvas"
                                 className="nav-item">
                                 <Link
                                     className="nav-link active"
                                     to="/electrozona"
                                 >
-                                    Inicio
+                                    Inicio Electrozona
                                 </Link>
                             </li>
                             <li className="nav-item dropdown desktop" ref={dropdownRef}>
@@ -148,11 +158,9 @@ const Navbar = () => {
                         </ul>
                     </div>
                 </div>
-                <Cart />
-
             </div>
         </nav>
     );
 };
 
-export default Navbar;
+export default NavbarAdmin;

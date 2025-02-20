@@ -1,34 +1,62 @@
 nav.navbar {
     background-color: #000;
-    .offcanvas-body{
-        li{
-            &.login{
+    .offcanvas-body {
+        .desktop {
+            display: none;
+            background-color: #000;
+            .dropdown-menu {
+                background-color: #000;
+                li:hover {
+                    a {
+                        color: #000 !important;
+                    }
+                }
+            }
+        }
+        li {
+            &.login {
                 margin-top: 20px;
             }
-            a{
+            a {
                 color: white !important;
             }
         }
     }
     @media (min-width: 990px) {
         .offcanvas-body {
+            .desktop {
+                display: inline-block;
+                margin: 0 20px;
+            }
             li {
-                display: none;
-                border-bottom: 2px solid #000;
-                &.login{
-                    margin-top: 5px;
-                    margin-left: 30px;
-                    margin-right: 30px;
-                    display: flex;
-                }
+                margin-bottom: 2px;
                 &:hover {
                     border-bottom: 2px solid white;
+                    margin-bottom: 0;
                 }
                 a {
                     font-size: 13px;
                     text-transform: uppercase;
                     color: white !important;
                 }
+            }
+            li.dropdown{
+                &:hover {
+                    border-bottom: 0px solid white;
+                    margin-bottom: 0;
+                }
+            }
+            li.login {
+                margin-top: inherit;
+                margin-left: 30px;
+                margin-right: 30px;
+                display: flex;
+                align-items: center;
+            }
+
+            li.mobile {
+                display: none;
+                border-bottom: 2px solid #000;
             }
         }
     }

@@ -11,36 +11,61 @@ import ProductContainer from './components/product/ProductsContainer';
 import Login from './components/login/Login';
 import ProtectedRoute from './components/login/ProtectedRoute';
 import ProductManager from './components/productManager/ProductManager';
+import ScrollToTop from "./components/formatters/ScrollToTop"
+import ProductEdit from './components/productManager/ProductEdit';
+import NavbarAdmin from './components/navbar/NavbarAdmin';
+
+// Layout para el admin (sin Navbar ni WhatsAppFloat)
+const AdminLayout = () => {
+  return (
+    <div className="admin-layout">
+      <NavbarAdmin></NavbarAdmin>
+      <Outlet /> {/* Renderiza las rutas hijas */}
+    </div>
+  );
+};
 
 function App() {
-
   return (
-
-    <div className="App d-flex flex-column justify-content-between" style={{ marginTop: "80px", minHeight: "100vh", }}>
+    <div className="App d-flex flex-column justify-content-between" style={{ marginTop: "80px", minHeight: "100vh" }}>
       <CartProvider>
         <Router>
-          <div></div>
-          <Navbar />
+          <ScrollToTop />
 
           <Routes>
+            {/* Rutas ADMIN sin Navbar ni WhatsAppFloat */}
             <Route path="/electrozona/admin" element={<ProtectedRoute />}>
-              <Route index element={<ProductManager></ProductManager>} />
+              <Route element={<AdminLayout />}>
+                <Route index element={<ProductManager />} />
+                <Route path="product/:id" element={<ProductEdit />} />
+              </Route>
             </Route>
-            <Route path="/electrozona" element={<Home />} />
-            <Route path="/electrozona/login" element={<Login />} />
-            <Route path="/electrozona/carrito" element={<CartContainer />} />
-            <Route path="/electrozona/product/:id" element={<ProductDetail />} />
-            <Route path="/electrozona/category/:id" element={<ProductContainer />} />
 
-            <Route path="*" element={<Navigate to="/electrozona" replace />} />
+            {/* Rutas normales con Navbar y WhatsAppFloat */}
+            <Route path="/electrozona" element={<NavbarWrapper />} />
           </Routes>
 
           <Footer />
-          <WhatsAppFloat />
         </Router>
       </CartProvider>
     </div>
   );
 }
+
+// Componente que envuelve rutas normales con Navbar y WhatsAppFloat
+const NavbarWrapper = () => (
+  <>
+    <Navbar />
+    <WhatsAppFloat />
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="login" element={<Login />} />
+      <Route path="carrito" element={<CartContainer />} />
+      <Route path="product/:id" element={<ProductDetail />} />
+      <Route path="category/:id" element={<ProductContainer />} />
+      <Route path="*" element={<Navigate to="/electrozona" replace />} />
+    </Routes>
+  </>
+);
 
 export default App;

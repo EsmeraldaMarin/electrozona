@@ -24,7 +24,7 @@ const CartContainer = () => {
             .join("\n");
         const total = `\n------------------------------\n\n*Total final: ${formatPrice(totalAmount())}*`;
         const whatsappLink = `https://wa.me/${telefonoVendedor}?text=${encodeURIComponent(
-            `_¡Hola, Electrozona! Quiero realizar la compra de los siguientes productos:_\n\n------------------------------\n\n${message}${total}`
+            `_¡Hola, Electro Zona! Quiero realizar la compra de los siguientes productos:_\n\n------------------------------\n\n${message}${total}`
         )}`;
 
         window.open(whatsappLink, "_blank");

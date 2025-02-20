@@ -1,3 +1,10 @@
 .bi.bi-cart {
     color: white;
 }
+
+.cartContainer{
+    @media (min-width: 990px) {
+        width: 40%;
+        margin: 0 auto;
+    }
+}

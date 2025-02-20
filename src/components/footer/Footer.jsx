@@ -28,7 +28,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <p className='mt-5'>© 2025 Electrozona. Todos los derechos reservados.</p>
+            <p className='mt-5'>© 2025 Electro Zona. Todos los derechos reservados.</p>
         </footer>
     );
 };

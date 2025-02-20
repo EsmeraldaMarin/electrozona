@@ -22,14 +22,17 @@
         display: flex;
         flex-direction: column;
         align-items: start;
+        margin: 40px 0;
+
         @media (min-width: 990px) {
             width: 90vw;
             padding-left: 100px;
-            margin: 80px 0;
+            margin: 60px 0;
         }
         .product-list {
             overflow-x: auto;
-            width: 90vw;
+            width: 100vw;
+            padding: 0 20px;
             display: flex;
             .card {
                 min-width: 230px !important;
@@ -37,7 +40,7 @@
             }
             @media (min-width: 990px) {
                 padding: 20px 0px !important;
-
+                width: 85vw;
                 .card {
                     width: 300px !important;
                 }
@@ -68,21 +71,45 @@
                 }
             }
         }
-        .vertodos {
-            width: 90vw;
-            text-align: start;
-            font-size: 1.5em;
-            &::after {
-                content: "";
-                display: inline-block;
-                width: 80%;
+        .line-ver-mas {
+            width: 100%;
+            padding: 10px 20px;
+            @media (min-width: 990px) {
+                width: 90%;
+            }
+            .vertodos {
+                text-align: start;
+                @media (min-width: 990px) {
+                    font-size: 1.5em;
+                }
+            }
+            .line {
                 height: 2px;
+                width: calc(100% - 150px);
                 background-color: #000;
-                margin-bottom: 0.25em;
-                margin-left: 20px;
+                @media (min-width: 990px) {
+                    width: calc(100% - 250px);
+                }
+            }
+            .div-botones-direcciones {
+                > div {
+                    width: 20px;
+                    height: 20px;
+                    background-color: #383838;
+                    color: #fff;
+                    cursor: pointer;
+                    @media (min-width: 990px) {
+                        width: 40px;
+                        height: 40px;
+                    }
+                    &:hover{
+                        background-color: #787878;
+                    }
+                }
             }
         }
     }
+
     .product-list-by-category {
         display: grid;
         grid-template-columns: repeat(2, 45%);

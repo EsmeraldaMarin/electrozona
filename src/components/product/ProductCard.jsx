@@ -16,10 +16,10 @@ const ProductCard = ({ product }) => {
         }).format(price);
     };
     return (
-        <div className="card mb-2" onClick={handleClick} id={product.id}>
+        <div className="card mb-2" onClick={handleClick} id={product.id} style={{maxWidth:"228px"}}>
             <img src={product.imagen[0]} className="card-img-top" alt={product.nombre} style={{minHeight:'168px', maxHeight:'168px', objectFit: 'contain'}}/>
             <div className="card-body">
-                <h5 className="card-title fs-6 fw-bolder" style={{fontFamily:"Kanit, sans-serif"}}>{product.nombre}</h5>
+                <h5 className="card-title fs-6 fw-bolder text-wrap" style={{fontFamily:"Kanit, sans-serif"}}>{product.nombre}</h5>
                 <p className="card-text fw-bold">{formatPrice(product.precio)}</p>
                 <button type="button" className="btn btn-dark" style={{ fontSize: '10px', width:'100%' }}>AGREGAR AL CARRITO</button>
             </div>

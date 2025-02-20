@@ -4,7 +4,24 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    @media (min-width: 990px) {
+        padding: 20px 10%;
+    }
 
+    div.filtrar-por-categoria{
+        label{
+            font-size: 14px;
+            @media (min-width: 990px) {
+                font-size: 16px;
+            }
+        }
+        select{
+            width: 250px;
+            @media (min-width: 990px) {
+                width: 350px;
+            }
+        }
+    }
     h1 {
         color: #333;
         text-align: center;
@@ -40,8 +57,8 @@
             }
 
             img {
-                width: 50px;
-                height: 50px !important;
+                width: 70px;
+                height: 70px !important;
                 object-fit: cover;
                 height: auto;
                 border-radius: 5px;
@@ -56,9 +73,56 @@
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 990px) {
         .desktop-only {
             display: none;
         }
     }
 }
+
+.product-edit{
+    .btn-volver{
+        margin: 2em 0 0 2em;
+        background-color: #000;
+        border-radius: 0px !important;
+        &:hover{
+            background-color: #343434;
+        }
+        @media (min-width: 1400px) {
+            margin: 2em 0 0 100px;
+        }
+    }
+    .product-detail.admin {
+        
+        @media (min-width: 990px) {
+            padding: 2em !important;
+        }
+        @media (min-width: 1400px) {
+            padding: 2em 100px !important;
+        }
+        .product-detail-data {
+            @media (min-width: 990px) {
+                padding: 0px;
+            }
+        }
+        .imagenes-ctn {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            @media (min-width: 990px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .contenedor-precio-stock {
+            display: flex;
+            flex-wrap: wrap;
+            @media (min-width: 990px) {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-column-gap: 10px;
+            }
+        }
+    }
+}
+
