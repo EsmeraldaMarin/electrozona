@@ -31,7 +31,7 @@ const Login = () => {
                 adminSnap.data().password === password &&
                 adminSnap.data().role === "admin"
             ) {
-                navigate("/electrozona/admin");
+                navigate("/admin");
                 //es una especie de clave
                 localStorage.setItem("electrozona", "365")
             } else {
@@ -58,7 +58,7 @@ const Login = () => {
                 console.log("Usuario administrador registrado en Firestore");
             }
 
-            navigate("/electrozona/admin");
+            navigate("/admin");
         } catch (err) {
             setError("Error en inicio de sesión: " + err.message);
         }

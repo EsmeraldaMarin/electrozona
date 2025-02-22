@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/electrozona/product/${product.id}`);
+        navigate(`/product/${product.id}`);
         window.scrollTo(0, 0); 
     };
     const formatPrice = (price) => {

@@ -7,33 +7,24 @@
     @media (min-width: 990px) {
         padding: 20px 10%;
     }
-
-    div.filtrar-por-categoria{
-        label{
-            font-size: 14px;
-            @media (min-width: 990px) {
-                font-size: 16px;
-            }
-        }
-        select{
-            width: 250px;
-            @media (min-width: 990px) {
-                width: 350px;
+    .buttons-ctn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        .btn-add {
+            background-color: #000;
+            color: #fff !important;
+            padding: 10px 30px;
+            &:hover {
+                background-color: #333;
             }
         }
     }
     h1 {
         color: #333;
         text-align: center;
-    }
-
-    select {
-        width: 300px;
-        margin: 10px 0;
-        margin-left: 20px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
+        margin-bottom: 40px;
     }
 
     .table-ctn {
@@ -52,7 +43,7 @@
             }
 
             th {
-                background-color: #333;
+                background-color: #000;
                 color: white;
             }
 
@@ -80,20 +71,37 @@
     }
 }
 
-.product-edit{
-    .btn-volver{
+.product-edit {
+    .btn-volver {
         margin: 2em 0 0 2em;
         background-color: #000;
         border-radius: 0px !important;
-        &:hover{
+        &:hover {
             background-color: #343434;
         }
         @media (min-width: 1400px) {
             margin: 2em 0 0 100px;
         }
     }
+    .buttons-ctn {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 2em 20px 0;
+        @media (min-width: 1400px) {
+            padding: 20px 100px 20px 0;
+        }
+        .btn-add {
+            background-color: #000;
+            color: #fff !important;
+            padding: 10px 30px;
+            &:hover {
+                background-color: #333;
+            }
+        }
+    }
     .product-detail.admin {
-        
         @media (min-width: 990px) {
             padding: 2em !important;
         }
@@ -126,3 +134,96 @@
     }
 }
 
+.product-add {
+    .buttons-ctn {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        padding: 20px 2em 0 2em;
+        h3 {
+            margin-top: 20px;
+        }
+        @media (min-width: 1400px) {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 100px;
+            h3 {
+                margin: 0;
+            }
+        }
+        .btn-volver {
+            background-color: #000;
+            border-radius: 0px !important;
+            &:hover {
+                background-color: #343434;
+            }
+        }
+    }
+    .btn-add {
+        background-color: #007054;
+        color: #fff !important;
+        padding: 10px 30px;
+        transition: 0.3s;
+        &:hover {
+            background-color: #004332;
+        }
+        &.only-mobile{
+            display: inline-block;
+        }
+        &.only-desktop{
+            display: none;
+        }
+        @media (min-width: 990px) {
+            &.only-mobile{
+                display: none;
+            }
+            &.only-desktop{
+                display: inline-block;
+            }
+        }
+    }
+    .product-detail.admin {
+        select,
+        input,
+        textarea {
+            border: 1px solid #bbb;
+        }
+        @media (min-width: 990px) {
+            padding: 2em !important;
+            font-size: 1.1em;
+            input,
+            select,
+            p {
+                font-size: 1.1em;
+            }
+        }
+        @media (min-width: 1400px) {
+            padding: 2em 100px !important;
+        }
+        .product-detail-data {
+            @media (min-width: 990px) {
+                padding: 0px;
+            }
+        }
+        .imagenes-ctn {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            @media (min-width: 990px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .contenedor-precio-stock {
+            display: flex;
+            flex-wrap: wrap;
+            @media (min-width: 990px) {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-column-gap: 10px;
+            }
+        }
+    }
+}

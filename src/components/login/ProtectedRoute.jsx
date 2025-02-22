@@ -6,7 +6,7 @@ const ProtectedRoute = () => {
 
     const userManualLog = localStorage.getItem('electrozona')
 
-    return ((user && role === "admin") || userManualLog === "365") ? <Outlet /> : <Navigate to="/electrozona" />;
+    return ((user && role === "admin") || userManualLog === "365") ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

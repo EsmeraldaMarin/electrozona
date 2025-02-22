@@ -8,7 +8,7 @@ const Cart = () => {
     const totalItems = totalQuantity(); // Obtén el número total de ítems
 
     return (
-        <Link to='/electrozona/carrito/#' className="d-flex justify-content-center align-items-center" style={{ color: "#fff", width: '50px', height: '50px' }}>
+        <Link to='/carrito/#' className="d-flex justify-content-center align-items-center" style={{ color: "#fff", width: '50px', height: '50px' }}>
             <i className="bi bi-cart me-1" style={{ fontSize: '1.5em' }}></i>
             <div className="cant_productos fw-bold"
                 style={{

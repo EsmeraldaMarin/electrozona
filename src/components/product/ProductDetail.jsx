@@ -63,7 +63,7 @@ const ProductDetail = () => {
 
     const handleWhatsapp = () => {
         const message = `¡Hola! Estoy interesado en el producto ${product.nombre}.`;
-        const whatsappUrl = `https://wa.me/543571315193?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = `https://wa.me/543825538793?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     };
     const formatPrice = (price) => {
@@ -84,7 +84,7 @@ const ProductDetail = () => {
                 <div className="notification position-fixed top-0 end-0 m-3 mt-5 p-3 bg-light shadow rounded" style={{ zIndex: "2000" }}>
                     <p className="m-0"><strong>¡Producto agregado al carrito!</strong></p>
                     <div className='d-flex mt-3'>
-                        <img src={notification.img} alt="" style={{ width: "60px", height: "60px", objectFit: "contain" }} />
+                        <img src={notification.img[0]} alt="" style={{ width: "60px", height: "60px", objectFit: "contain" }} />
                         <div className='ms-2'>
                             <p className="m-0">x{notification.quantity}</p>
                             <p className="m-0">{notification.name}</p>
@@ -96,9 +96,9 @@ const ProductDetail = () => {
 
             <div className='product-detail-principal'>
 
-                <Link to={`/electrozona`} className='text-decoration-underline text-black'>INICIO</Link>
+                <Link to={`/`} className='text-decoration-underline text-black'>INICIO</Link>
                 <span className='mx-2'>{`/`}</span>
-                <Link to={`/electrozona/category/${product.categoria}`} className='text-decoration-underline text-black'>{product.categoria}</Link>
+                <Link to={`/category/${product.categoria}`} className='text-decoration-underline text-black'>{product.categoria}</Link>
 
                 <h2 className='fw-bold fs-4 mt-4'>{product.nombre}</h2>
 

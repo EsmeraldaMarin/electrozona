@@ -4,7 +4,7 @@ import './WhatsAppFloat.css'; // CSS para el posicionamiento flotante
 const WhatsAppFloat = () => {
     return (
         <a 
-            href="https://wa.me/543571315193?text=Hola,%20tengo%20una%20consulta" 
+            href="https://wa.me/543825538793?text=Hola,%20tengo%20una%20consulta" 
             target="_blank" 
             rel="noopener noreferrer"
             className="whatsapp-float"

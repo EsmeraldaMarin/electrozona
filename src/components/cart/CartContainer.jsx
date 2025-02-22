@@ -15,7 +15,7 @@ const CartContainer = () => {
     };
 
     const handleCompra = () => {
-        const telefonoVendedor = "5493571315193"; // Reemplaza con el número de teléfono del vendedor (código de país incluido).
+        const telefonoVendedor = "5493825538793"; // Reemplaza con el número de teléfono del vendedor (código de país incluido).
         const message = cart
             .map(
                 (item) =>
@@ -33,7 +33,7 @@ const CartContainer = () => {
         <>
             <div className='cartContainer mt-4'>
                 <p className='py-2 fw-bold fs-2 position-relative' style={{ backgroundColor: "#f0f0f0" }}>
-                    <Link to="/electrozona/#" className='btn rounded bi bi-chevron-left fw-bolder fs-2 p-0 position-absolute top-50 translate-middle-y start-0'></Link>
+                    <Link to="/#" className='btn rounded bi bi-chevron-left fw-bolder fs-2 p-0 position-absolute top-50 translate-middle-y start-0'></Link>
                     Tu carrito
                 </p>
                 {cart.length !== 0 ?
@@ -52,7 +52,7 @@ const CartContainer = () => {
                     :
                     <div className='emptyCart'>
                         <p>No hay productos en tu carrito</p>
-                        <Link to='/electrozona' className='text-decoration-underline'>Ir a Inicio</Link>
+                        <Link to='/' className='text-decoration-underline'>Ir a Inicio</Link>
                     </div>}
 
             </div>

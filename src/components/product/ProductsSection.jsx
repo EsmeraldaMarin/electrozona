@@ -27,9 +27,9 @@ const ProductSection = ({ categories, filtrarProductosPorCategoria }) => {
 
                 return (
                     <div key={categoria.nombre} className='section-ctn'>
-                        <Link to={'/electrozona/category/' + categoria.nombre} className='categoria-banner'>{categoria.nombre}</Link>
+                        <Link to={'/category/' + categoria.nombre} className='categoria-banner'>{categoria.nombre}</Link>
                         <div className='d-flex justify-content-between align-items-center line-ver-mas'>
-                            <Link to={'/electrozona/category/' + categoria.nombre} className='vertodos'>Ver todos</Link>
+                            <Link to={'/category/' + categoria.nombre} className='vertodos'>Ver todos</Link>
                             <div className='line'></div>
                             <div className='d-flex div-botones-direcciones'>
                                 <div className='d-flex justify-content-center align-items-center' 

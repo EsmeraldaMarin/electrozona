@@ -53,7 +53,7 @@ const NavbarAdmin = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="navbar-brand m-0">
-                    <Link to="/electrozona">
+                    <Link to="/">
                         <img
                             style={{ width: '50px', height: '50px' }}
                             src={process.env.PUBLIC_URL + '/img/logo_electro.png'}
@@ -92,7 +92,7 @@ const NavbarAdmin = () => {
                                 className="nav-item me-3">
                                 <Link
                                     className="nav-link active"
-                                    to="/electrozona/admin"
+                                    to="/admin"
                                 >
                                     Gestión de Productos
                                 </Link>
@@ -102,9 +102,9 @@ const NavbarAdmin = () => {
                                 className="nav-item">
                                 <Link
                                     className="nav-link active"
-                                    to="/electrozona"
+                                    to="/"
                                 >
-                                    Inicio Electrozona
+                                    Inicio
                                 </Link>
                             </li>
                             <li className="nav-item dropdown desktop" ref={dropdownRef}>
@@ -122,7 +122,7 @@ const NavbarAdmin = () => {
                                             className="nav-item" key={categoria.id}>
                                             <Link
                                                 className="dropdown-item"
-                                                to={`/electrozona/category/${categoria.id}`}
+                                                to={`/category/${categoria.id}`}
                                             >
                                                 {capitalize(categoria.nombre)}
                                             </Link>
@@ -138,7 +138,7 @@ const NavbarAdmin = () => {
                                     className="nav-item mobile" key={categoria.id}>
                                     <Link
                                         className="nav-link"
-                                        to={`/electrozona/category/${categoria.id}`}
+                                        to={`/category/${categoria.id}`}
                                     >
                                         {capitalize(categoria.nombre)}
                                     </Link>
@@ -150,7 +150,7 @@ const NavbarAdmin = () => {
                                 className="nav-item login" >
                                 <Link
                                     className="nav-lin"
-                                    to={`/electrozona/login`}
+                                    to={`/login`}
                                 >
                                     Iniciar Sesión <i className="ms-1 bi bi-person"></i>
                                 </Link>

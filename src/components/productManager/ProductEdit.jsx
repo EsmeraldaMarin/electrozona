@@ -137,9 +137,8 @@ const ProductEdit = () => {
 
     return (
         <div className="d-flex flex-column product-edit align-items-start">
-            <Link to={'/electrozona/admin'} className="btn-volver btn btn-secondary text-white">{`<`} Volver</Link>
+            <Link to={'/admin'} className="btn-volver btn btn-secondary text-white">{`<`} Volver</Link>
             <div className="product-detail admin text-start">
-                {/* <Link to="/electrozona/admin" className="btn btn-secondary">Volver</Link>*/}
                 <div className="product-detail-principal mb-3">
                     <p className="p-0">Nombre del producto</p>
                     <div className="input-group mb-3">

@@ -8,7 +8,7 @@ const Categories = ({ categorias }) => {
                 <Link
                     className='categoria-card'
                     key={index}
-                    to={'/electrozona/category/' + cat.nombre}
+                    to={'/category/' + cat.nombre}
                 >
                     <div
                         className={`py-1 text-uppercase text-wrap d-flex flex-column justify-content-center align-items-center`}
