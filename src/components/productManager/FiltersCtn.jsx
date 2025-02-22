@@ -11,12 +11,18 @@ const FiltersCtn = ({ allCategorias, filters, setFilters }) => {
             [name]: value,
         }));
     };
-    console.log(filters)
 
     return (
         <div className={`filters ${desplegado && "activo"}`} >
             <div className="title-filter border-bottom pb-2" onClick={() => setDesplegado(!desplegado)}>
                 <h5 className="text-start ">Filtrar Productos <i className="ms-3 bi bi-chevron-down"></i></h5>
+                {Object.values(filters).map(filtro => {
+                    if (typeof filtro !== "string" || !filtro || filtro === "") return
+                    if (filtro === "true") return <p className="filtros-header">Activos</p>
+                    if (filtro === "false") return <p className="filtros-header">Inactivos</p>
+
+                    return <p className="filtros-header">{filtro}</p>
+                })}
             </div>
             <div className="filters-ctn">
                 <div className="mb-3 filtro-nombre">

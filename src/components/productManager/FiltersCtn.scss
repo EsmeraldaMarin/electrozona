@@ -26,6 +26,17 @@
     .title-filter {
         cursor: pointer;
         width: 100%;
+        display: flex;
+        h5{
+            margin-right: 20px;
+        }
+        .filtros-header{
+            background-color: #494949;
+            color: #fff;
+            width: fit-content;
+            padding: 2px 10px;
+            margin-right: 5px;
+        }
     }
     .filters-ctn {
         @media (min-width: 990px) {

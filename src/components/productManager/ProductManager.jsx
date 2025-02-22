@@ -24,7 +24,27 @@ const ProductManager = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
+    const handleSort = (key) => {
+        let direction = "asc";
+        if (sortConfig.key === key && sortConfig.direction === "asc") {
+            direction = "desc";
+        }
+        setSortConfig({ key, direction });
+
+        const sortedProducts = [...productosFiltrados].sort((a, b) => {
+            if (key === "precio") {
+                return direction === "asc" ? a[key] - b[key] : b[key] - a[key];
+            } else {
+                return direction === "asc"
+                    ? a[key].toString().localeCompare(b[key].toString())
+                    : b[key].toString().localeCompare(a[key].toString());
+            }
+        });
+
+        setProductosFiltrados(sortedProducts);
+    };
     const fetchAllProductos = async () => {
         const querySnapshot = await getDocs(collection(db, "Productos"));
         setAllProductos(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -107,17 +127,18 @@ const ProductManager = () => {
                     <thead>
                         <tr>
                             <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("nombre")}>Nombre ⬍</th>
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("precio")}>Precio ⬍</th>
                             <th>Stock</th>
-                            <th>Código</th>
-                            <th>Categoría</th>
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("codigo")}>Código ⬍</th>
+                            <th style={{ cursor: "pointer" }} onClick={() => handleSort("categoria")}>Categoría ⬍</th>
                             <th className="desktop-only">Descripción</th>
                             <th className="desktop-only">Características</th>
                             <th className="desktop-only">Activo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {productosFiltrados?.map((product) => (
                             <tr key={product.id}>

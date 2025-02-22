@@ -30,6 +30,7 @@ const ProductContainer = () => {
                 productQuery = query(
                     productCollection,
                     where("categoria", "==", categoria),
+                    where("activo", "==", true),
                     orderBy("precio"), // Ordenamos por precio
                     //limit(productsPerPage)
                 );
@@ -37,6 +38,7 @@ const ProductContainer = () => {
             else {
                 productQuery = query(
                     productCollection,
+                    where("activo", "==", true),
                     orderBy("precio"),
                     //limit(productsPerPage)
                 );
