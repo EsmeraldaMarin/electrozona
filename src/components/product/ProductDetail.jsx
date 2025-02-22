@@ -81,7 +81,7 @@ const ProductDetail = () => {
         <div className="product-detail text-start">
             {/* Notificación */}
             {notification && (
-                <div className="notification position-fixed top-0 end-0 m-3 mt-5 p-3 bg-light shadow rounded" style={{ zIndex: "2000" }}>
+                <Link to='/carrito/#' className="notification position-fixed top-0 end-0 m-3 mt-5 p-3 bg-light shadow rounded" style={{ zIndex: "2000" }}>
                     <p className="m-0"><strong>¡Producto agregado al carrito!</strong></p>
                     <div className='d-flex mt-3'>
                         <img src={notification.img[0]} alt="" style={{ width: "60px", height: "60px", objectFit: "contain" }} />
@@ -91,7 +91,7 @@ const ProductDetail = () => {
                             <p className="m-0 fw-bold">{formatPrice(notification.price)}</p>
                         </div>
                     </div>
-                </div>
+                </Link>
             )}
 
             <div className='product-detail-principal'>

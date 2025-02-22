@@ -29,7 +29,7 @@ const itemOnCart = ({ item, removeItem }) => {
                 </Link>
                 <div className='d-flex justify-content-between' style={{width:"100%"}}>
                     <ItemCountSimple stock={item.cantidad} initial={item.quantity} onAdd={updateItemOnCartFunction} item={item} />
-                    <span className='fw-bolder fs-5 '>{formatPrice(price)}</span>
+                    <span className='fw-bolder fs-5 '>{item.quantity}x {formatPrice(item.precio)}</span>
                 </div>
             </div>
         </div>

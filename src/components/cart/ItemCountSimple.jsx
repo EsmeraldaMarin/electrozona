@@ -10,7 +10,8 @@ const ItemCountSimple = ({ stock, initial, onAdd, item }) => {
         if (count > 1) { setCount((prevCount) => prevCount - 1) }
     }
     const increaseCount = () => {
-        if (count < stock) { setCount((prevCount) => prevCount + 1) }
+        //if (count < stock) { setCount((prevCount) => prevCount + 1) }
+         setCount((prevCount) => prevCount + 1) 
     }
     return (
         <div className="itemCountCtnSimple d-flex align-items-center">

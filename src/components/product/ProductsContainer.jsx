@@ -110,9 +110,9 @@ const ProductContainer = () => {
                     ))}</div>}
 
             <div className="pagination d-flex justify-content-center">
-                {hasMore && !loading && (
+                {/*hasMore && !loading && (
                     <button onClick={() => fetchProducts(true)} className=' btn btn-secondary'>Cargar más</button>
-                )}
+                )*/}
                 {loading && <div className="skeleton-grid px-2">
                     {Array.from({ length: 10 }).map((_, index) => (
                         <SkeletonLoader key={index} height={"300px"} />
