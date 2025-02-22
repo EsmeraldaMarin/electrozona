@@ -109,7 +109,6 @@ const ProductEdit = () => {
         setShowModal(true);
     };
 
-
     const handleDeleteImage = async () => {
         if (imageIndex === null) return;
         setCargando(true)
@@ -126,7 +125,29 @@ const ProductEdit = () => {
             setCargando(false)
         }
     };
+    const cambiarOrdenImagen = async (index) => {
+        if (!product || !product.imagen || product.imagen.length <= 1) return;
 
+        // Clonamos el array de imágenes
+        let nuevasImagenes = [...product.imagen];
+
+        // Extraemos la imagen seleccionada y la colocamos en la primera posición
+        const imagenSeleccionada = nuevasImagenes.splice(index, 1)[0];
+        nuevasImagenes.unshift(imagenSeleccionada);
+
+        try {
+            // Referencia al producto en la base de datos
+            const productRef = doc(db, "Productos", product.id);
+
+            // Actualizar en Firestore
+            await updateDoc(productRef, { imagen: nuevasImagenes });
+
+            // Actualizar el estado local para reflejar el cambio
+            setProduct((prev) => ({ ...prev, imagen: nuevasImagenes }));
+        } catch (error) {
+            console.error("Error al actualizar la imagen principal:", error);
+        }
+    };
 
     if (!product)
         return (
@@ -166,6 +187,7 @@ const ProductEdit = () => {
                     <div className="imagenes-ctn">
                         {product?.imagen?.map((imagen, index) => (
                             <div key={index} className="p-2 d-flex flex-column align-items-end" style={{ boxShadow: "0 0 10px #ddd" }}>
+
                                 <button
                                     type="button"
                                     className="btn-close mb-2"
@@ -178,6 +200,15 @@ const ProductEdit = () => {
                                     style={{ maxHeight: "200px", minHeight: "200px", objectFit: "contain" }}
                                     className="d-block w-100"
                                 />
+                                <div className="form-check mt-3">
+                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id={`flexRadioDefault${index}`}
+                                        onChange={() => cambiarOrdenImagen(index)}
+                                        checked={index === 0}
+                                    />
+                                    <label className="form-check-label" htmlFor={`flexRadioDefault${index}`}>
+                                        Principal
+                                    </label>
+                                </div>
                             </div>
                         ))}
                     </div>
