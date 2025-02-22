@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebaseConfig"; // Asegúrate de importar correctamente tu configuración de Firebase
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import "./ProductManager.scss";
 import PriceFormatter from "../formatters/PriceFormatter"
 import CircleLoader from "../loader/CircleLoader";
@@ -11,6 +11,7 @@ const ProductManager = () => {
     const [allProductos, setAllProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [allCategorias, setAllCategorias] = useState([]);
+    const [cargandoCambioEstado, setCargandoCambioEstado] = useState(false);
     const [filters, setFilters] = useState({
         nombre: "",
         codigo: "",
@@ -20,6 +21,9 @@ const ProductManager = () => {
         estado: "",
         allCategorias: [],
     });
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const fetchAllProductos = async () => {
         const querySnapshot = await getDocs(collection(db, "Productos"));
@@ -51,6 +55,42 @@ const ProductManager = () => {
 
         setProductosFiltrados(resultadoDelFiltro);
     }, [filters, allProductos]);
+
+    const toggleProductStatus = async (productId, currentStatus) => {
+        try {
+            setCargandoCambioEstado(true)
+            const productRef = doc(db, "Productos", productId);
+            await updateDoc(productRef, { activo: !currentStatus });
+            fetchAllProductos();
+            setCargandoCambioEstado(false)
+        } catch (error) {
+            console.error("Error al cambiar el estado del producto:", error);
+        }
+    };
+
+    //DELETE PRODUCT
+    const handleShowModal = (product) => {
+        setSelectedProduct(product);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedProduct(null);
+    };
+
+    const handleDeleteProduct = async () => {
+        if (!selectedProduct) return;
+
+        try {
+            await deleteDoc(doc(db, "Productos", selectedProduct.id));
+            fetchAllProductos()
+        } catch (error) {
+            console.error("Error al eliminar el producto:", error);
+        }
+
+        handleCloseModal();
+    };
 
     return (
         <div className="product-manager" >
@@ -101,8 +141,26 @@ const ProductManager = () => {
                                 </td>
                                 <td className="desktop-only">{product.activo ? "Sí" : "No"}</td>
                                 <td>
-                                    <Link to={`/admin/product/${product.id}`} className="btn btn-primary d-flex text-white">Editar <i className="ms-1 bi bi-pencil"></i></Link>
+                                    <div className="d-flex">
+                                        <Link to={`/admin/product/${product.id}`} className="btn btn-primary d-flex text-white">Editar <i className="ms-1 bi bi-pencil"></i></Link>
+                                        {
+                                            product.activo ?
+                                                <button
+                                                    className="btn mx-2 text-white"
+                                                    style={{ backgroundColor: "#d06100" }}
+                                                    onClick={() => toggleProductStatus(product.id, product.activo)}
+                                                    disabled={cargandoCambioEstado}
+                                                >Desactivar <i className="bi bi-arrow-down"></i> </button>
+                                                :
+                                                <button
+                                                    className="btn btn-success mx-2 text-white"
+                                                    onClick={() => toggleProductStatus(product.id, product.activo)}
+                                                    disabled={cargandoCambioEstado}
 
+                                                >Activar<i className="bi bi-arrow-up"></i> </button>
+                                        }
+                                        <button className="btn btn-danger text-white" style={{ width: "fit-content", minWidth: "fit-content" }} onClick={() => handleShowModal(product)}><i className="bi bi-trash"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -113,6 +171,27 @@ const ProductManager = () => {
                     <p className="my-5">No hay productos para mostrar</p>}
                 {allProductos.length === 0 && <CircleLoader texto={"Cargando productos..."}></CircleLoader>}
 
+            </div>
+            {/* Modal de Confirmación */}
+            <div className={`modal fade ${showModal ? "show d-block" : ""}`} tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Confirmar eliminación</h5>
+                            <button type="button" className="close" onClick={handleCloseModal}>
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p>¿Estás seguro de que deseas eliminar este producto?</p>
+                            <p><strong>Esta acción es irreversible.</strong></p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancelar</button>
+                            <button type="button" className="btn btn-danger" onClick={handleDeleteProduct}>Eliminar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div >
     );
