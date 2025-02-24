@@ -37,7 +37,7 @@ const NavbarWrapper = () => (
       <Route path="carrito" element={<CartContainer />} />
       <Route path="product/:id" element={<ProductDetail />} />
       <Route path="category/:id" element={<ProductContainer />} />
-      <Route path="*" element={<Navigate to="/electrozona" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </>
 );
@@ -45,7 +45,7 @@ const NavbarWrapper = () => (
 function App() {
   return (
     <div className="App d-flex flex-column justify-content-between" style={{ marginTop: "80px", minHeight: "100vh" }}>
-      <BrowserRouter basename="/electrozona">
+      <BrowserRouter>
         <CartProvider>
           <ScrollToTop />
 
