@@ -123,7 +123,7 @@ const ProductDetail = () => {
                         })}
                     </div>
 
-                    <div className="carousel-inner pt-5" style={{ maxHeight: "270px", minHeight: "270px" }}>
+                    <div className="carousel-inner pt-1" style={{ maxHeight: "270px", minHeight: "270px" }}>
                         {/* Solo el primer elemento debe tener la clase 'active' */}
                         {product.imagen.map((imagen, index) => (
                             <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
