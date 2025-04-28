@@ -1,23 +1,56 @@
-import React from 'react';
-import "./Carrousel.scss"
+import React, { useEffect, useState } from 'react';
+import { db } from '../../firebaseConfig'; // Asegurate de importar tu config de Firebase
+import { collection, getDocs } from 'firebase/firestore';
+import "./Carrousel.scss";
+
 const Carrousel = () => {
+    const [banners, setBanners] = useState([]);
+
+    useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "Banner"));
+                const bannersFromBD = querySnapshot.docs.map(doc => doc.data()); 
+                const bannersSorted = bannersFromBD.sort((a,b)=> Number(a.orden) - Number(b.orden))
+                setBanners(bannersSorted);
+            } catch (error) {
+                console.error("Error al obtener banners:", error);
+            }
+        };
+
+        fetchBanners();
+    }, []);
+
     return (
         <div id="carousel" className="carousel slide">
             <div className="carousel-indicators mb-1 ">
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                {banners.map((_, index) => (
+                    <button
+                        key={index}
+                        type="button"
+                        data-bs-target="#carousel"
+                        data-bs-slide-to={index}
+                        className={index === 0 ? "active" : ""}
+                        aria-current={index === 0}
+                        aria-label={`Slide ${index + 1}`}
+                    ></button>
+                ))}
             </div>
             <div className="carousel-inner" style={{ minHeight: '130px', maxHeight: '130px' }}>
-                <div className="carousel-item active" data-bs-interval="10000">
-                    <img src="https://images.samsung.com/is/image/samsung/assets/ar/buds3-watch7-launching/BANNER_HOME_GALAXY_BUDS3_PC_1440.jpg?imwidth=1366" className="d-block w-100" alt="..." />
-                </div>
-                <div className="carousel-item" data-bs-interval="2000">
-                    <img src="https://i.blogs.es/ee4554/galaxy-a34-a54-5g_apertura/1366_2000.jpeg" className="d-block w-100" alt="..." />
-                </div>
-                <div className="carousel-item">
-                    <img src="https://img.global.news.samsung.com/ar/wp-content/uploads/2022/10/Banner_CyberMonday-1000x563.jpg" className="d-block w-100" alt="..." />
-                </div>
+                {console.log(banners)}
+                {banners?.map((banner, index) => (
+                    <div
+                        key={index}
+                        className={`carousel-item ${index === 0 ? "active" : ""}`}
+                        data-bs-interval="3000"
+                        
+                    >
+                        <img src={banner?.url} className="d-block w-100" 
+                        /*style={{translate:`0px ${banner.offset}px`}}*/
+                        style={{objectFit:"contain"}}
+                        alt={`Banner ${index + 1}`} />
+                    </div>
+                ))}
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -28,6 +61,7 @@ const Carrousel = () => {
                 <span className="visually-hidden">Next</span>
             </button>
         </div>
-    )
-}
+    );
+};
+
 export default Carrousel;

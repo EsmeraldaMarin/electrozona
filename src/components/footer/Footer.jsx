@@ -16,13 +16,13 @@ const Footer = () => {
                         <h5>Redes Sociales</h5>
                         <p className='p-0'>¡Contactate con nosotros!</p>
                         <div className='d-flex flex-column align-items-center'>
-                            <a href="https://wa.me/543571315139" target="_blank" rel="noopener noreferrer" className="text-white d-flex align-items-center" style={{width:"250px", textAlign:"start"}}>
+                            <a href="https://wa.me/543825538793" target="_blank" rel="noopener noreferrer" className="text-white d-flex align-items-center" style={{width:"250px", textAlign:"start"}}>
                                 <i className="bi bi-whatsapp me-3" style={{ fontSize: '1.7em' }}></i>
-                                <p className='m-0'>+54 9 3571-315139</p>
+                                <p className='m-0'>+54 9 3825-315139</p>
                             </a>
-                            <a href="https://www.instagram.com/electrozona_" target="_blank" rel="noopener noreferrer" className="text-white d-flex align-items-center" style={{width:"250px", textAlign:"start"}}>
+                            <a href="https://www.instagram.com/electrozona__" target="_blank" rel="noopener noreferrer" className="text-white d-flex align-items-center" style={{width:"250px", textAlign:"start"}}>
                                 <i className="bi bi-instagram me-3" style={{ fontSize: '1.7em' }}></i>
-                                <p className='m-0'>@electrozona_</p>
+                                <p className='m-0'>@electrozona__</p>
                             </a>
                         </div>
                     </div>

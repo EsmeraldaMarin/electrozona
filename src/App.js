@@ -44,7 +44,7 @@ const NavbarWrapper = () => (
 
 function App() {
   return (
-    <div className="App d-flex flex-column justify-content-between" style={{ marginTop: "80px", minHeight: "100vh" }}>
+    <div className="App d-flex flex-column justify-content-between" style={{ marginTop: "75px", minHeight: "100vh" }}>
       <BrowserRouter>
         <CartProvider>
           <ScrollToTop />

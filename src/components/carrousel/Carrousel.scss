@@ -1,8 +1,23 @@
 .carousel {
+    .carousel-inner {
+        background-color: black;
+        
+    }
     @media (min-width: 990px) {
         .carousel-inner {
-            max-height: 300px !important;
-            min-height: 300px !important;
+            max-height: 400px !important;
+            min-height: 400px !important;
+            background-color: black;
+            img{
+                max-height: 400px !important;
+                min-height: 400px !important;
+            }
+        }
+        .carousel-control-prev{
+            translate: -50px 0;
+        }
+        .carousel-control-next{
+            translate: 50px 0;
         }
     }
 }
