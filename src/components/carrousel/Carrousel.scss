@@ -3,6 +3,11 @@
         background-color: black;
         
     }
+    @media (max-width: 990px) {
+        .not_mobile{
+            display: none;
+        }
+    }
     @media (min-width: 990px) {
         .carousel-inner {
             max-height: 400px !important;
