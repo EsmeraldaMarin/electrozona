@@ -94,7 +94,7 @@ const ProductContainer = () => {
             {(categories && !categoria) ?
                 <Categories categorias={categories}></Categories> :
                 <div className='my-4 px-3 d-flex justify-content-between align-items-center header-by-category'>
-                    <Link to={"/"} className='btn btn-secondary text-light text-start d-inline-block '>Inicio</Link>
+                    <Link to={"/"} className='btn rounded-0 btn-secondary text-light text-start d-inline-block '>Inicio</Link>
                     <h4 className='m-0'>{categoria}</h4>
                 </div>
             }
