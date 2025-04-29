@@ -114,12 +114,12 @@ const ProductManager = () => {
 
     return (
         <div className="product-manager" >
-            <div className="buttons-ctn">
+            <div className="buttons-ctn position-absolute" style={{top:"90px", right:"5%"}}>
                 <i></i>
                 {/*<button className="btn-add">Agregar Descuento <i className="ms-2 bi bi-tags"></i></button>*/}
                 <Link to='/admin/newProduct' className="btn-add">Agregar Producto <i className="ms-2 bi bi-plus-lg"></i></Link>
             </div>
-            <h1>Gestión de Productos</h1>
+            <h1 className="mt-4">Gestión de Productos</h1>
             <FiltersCtn allCategorias={allCategorias} filters={filters} setFilters={setFilters} />
             <div className="table-ctn" style={{ maxWidth: "100vw", overflowX: "auto" }}>
 
@@ -161,9 +161,9 @@ const ProductManager = () => {
                                     : product.caracteristicas}
                                 </td>
                                 <td className="desktop-only">{product.activo ? "Sí" : "No"}</td>
-                                <td>
+                                <td className="btn-ctn">
                                     <div className="d-flex">
-                                        <Link to={`/admin/product/${product.id}`} className="btn btn-primary d-flex text-white">Editar <i className="ms-1 bi bi-pencil"></i></Link>
+                                        <Link to={`/admin/product/${product.id}`} className="btn btn-primary d-flex text-white"><span className="desktop_disabled">Editar</span> <i className="ms-1 bi bi-pencil"></i></Link>
                                         {
                                             product.activo ?
                                                 <button
@@ -171,14 +171,14 @@ const ProductManager = () => {
                                                     style={{ backgroundColor: "#d06100" }}
                                                     onClick={() => toggleProductStatus(product.id, product.activo)}
                                                     disabled={cargandoCambioEstado}
-                                                >Desactivar <i className="bi bi-arrow-down"></i> </button>
+                                                ><span className="desktop_disabled">Desactivar</span> <i className="bi bi-arrow-down"></i> </button>
                                                 :
                                                 <button
                                                     className="btn btn-success mx-2 text-white"
                                                     onClick={() => toggleProductStatus(product.id, product.activo)}
                                                     disabled={cargandoCambioEstado}
 
-                                                >Activar<i className="bi bi-arrow-up"></i> </button>
+                                                ><span className="desktop_disabled">Activar</span><i className="bi bi-arrow-up"></i> </button>
                                         }
                                         <button className="btn btn-danger text-white" style={{ width: "fit-content", minWidth: "fit-content" }} onClick={() => handleShowModal(product)}><i className="bi bi-trash"></i></button>
                                     </div>

@@ -15,17 +15,18 @@ const FiltersCtn = ({ allCategorias, filters, setFilters }) => {
     return (
         <div className={`filters ${desplegado && "activo"}`} >
             <div className="title-filter border-bottom pb-2" onClick={() => setDesplegado(!desplegado)}>
-                <h5 className="text-start ">Filtrar Productos <i className="ms-3 bi bi-chevron-down"></i></h5>
-                {Object.values(filters).map(filtro => {
+                <h6 className="text-start me-2">Filtrar Productos <i className="ms-3 bi bi-chevron-down"></i></h6>
+                {/*Object.values(filters).map(filtro => {
+                    console.log(filters)
                     if (typeof filtro !== "string" || !filtro || filtro === "") return
                     if (filtro === "true") return <p className="filtros-header">Activos</p>
                     if (filtro === "false") return <p className="filtros-header">Inactivos</p>
 
                     return <p className="filtros-header">{filtro}</p>
-                })}
+                })*/}
             </div>
             <div className="filters-ctn">
-                <div className="mb-3 filtro-nombre">
+                <div className=" filtro-nombre">
                     <label className="form-label">Filtrar por Nombre:</label>
                     <input
                         type="text"
@@ -37,7 +38,7 @@ const FiltersCtn = ({ allCategorias, filters, setFilters }) => {
                     />
                 </div>
 
-                <div className="mb-3 filtro-codigo">
+                <div className=" filtro-codigo">
                     <label className="form-label">Filtrar por Código:</label>
                     <input
                         type="text"
@@ -49,7 +50,7 @@ const FiltersCtn = ({ allCategorias, filters, setFilters }) => {
                     />
                 </div>
 
-                <div className="mb-3 filtro-precios">
+                <div className=" filtro-precios">
                     <label className="form-label">Filtrar por Precios:</label>
                     <div className="d-flex">
                         <div className="input-group mb-3">
