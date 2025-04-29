@@ -36,7 +36,7 @@ const Carrousel = () => {
                     ></button>
                 ))}
             </div>
-            <div className="carousel-inner" style={{ minHeight: '150px', maxHeight: '160px' }}>
+            <div className="carousel-inner" style={{ minHeight: '170px', maxHeight: '170px' }}>
                 {console.log(banners)}
                 {banners?.map((banner, index) => (
                     <div
