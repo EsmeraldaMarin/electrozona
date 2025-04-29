@@ -36,7 +36,7 @@ const Carrousel = () => {
                     ></button>
                 ))}
             </div>
-            <div className="carousel-inner" style={{ minHeight: '130px', maxHeight: '130px' }}>
+            <div className="carousel-inner" style={{ minHeight: '150px', maxHeight: '160px' }}>
                 {console.log(banners)}
                 {banners?.map((banner, index) => (
                     <div
@@ -47,7 +47,7 @@ const Carrousel = () => {
                     >
                         <img src={banner?.url} className="d-block w-100" 
                         /*style={{translate:`0px ${banner.offset}px`}}*/
-                        style={{objectFit:"contain"}}
+                        style={{objectFit:"cover"}}
                         alt={`Banner ${index + 1}`} />
                     </div>
                 ))}
