@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, getDocs, collection } from "firebase/firestore";
 import { db, storage } from "../../firebaseConfig";
 import SkeletonLoader from "../loader/SkeletonLoader";
 import { Link } from "react-router-dom";
@@ -17,6 +17,8 @@ const ProductEdit = () => {
     const [showModal, setShowModal] = useState(false);
     const [imageToDelete, setImageToDelete] = useState(null);
     const [imageIndex, setImageIndex] = useState(null);
+    const [allCategorias, setAllCategorias] = useState([]);
+
 
     const getProductById = async (productId) => {
         try {
@@ -42,6 +44,13 @@ const ProductEdit = () => {
         };
         fetchProduct();
     }, [id]);
+    useEffect(() => {
+        const fetchAllCategorias = async () => {
+            const querySnapshot = await getDocs(collection(db, "Categorias"));
+            setAllCategorias(querySnapshot.docs.map(doc => doc.data().nombre));
+        };
+        fetchAllCategorias();
+    }, []);
 
     const handleModifyClick = (field) => {
         setEditingField(field); // Habilita solo un campo a la vez
@@ -255,6 +264,32 @@ const ProductEdit = () => {
                             </button>
                         ) : (
                             <button className="btn btn-secondary" onClick={() => handleModifyClick("descripcion")}>
+                                Modificar
+                            </button>
+                        )}
+                    </div>
+                    <p className="p-0">Categoría</p>
+                    <div className="input-group mb-3">
+                        <select
+                            className="form-select"
+                            name="categoria"
+                            value={editingField === "categoria" ? updatedValues.categoria : product.categoria}
+                            disabled={editingField !== "categoria"}
+                            onChange={(e) => handleInputChange("categoria", e.target.value)}
+                        >
+                            <option value="">Selecciona una categoría</option>
+                            {allCategorias?.map((cat, index) => (
+                                <option key={index} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                        {editingField === "categoria" && <button className="btn btn-outline-secondary" onClick={() => setEditingField(null)}><i className="bi bi-x-lg"></i></button>}
+
+                        {editingField === "categoria" ? (
+                            <button className="btn btn-success" disabled={cargando} onClick={() => handleSave("categoria")}>
+                                {cargando ? "Guardando..." : "Guardar"}
+                            </button>
+                        ) : (
+                            <button className="btn btn-secondary" onClick={() => handleModifyClick("categoria")}>
                                 Modificar
                             </button>
                         )}
