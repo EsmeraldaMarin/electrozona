@@ -96,7 +96,18 @@ const Navbar = () => {
                                         className="nav-link active"
                                         to="/admin"
                                     >
-                                        Gestión de Productos
+                                        Mis Productos
+                                    </Link>
+                                </li>}
+                            {usuarioLogueado === "365" &&
+                                <li
+                                    data-bs-dismiss="offcanvas"
+                                    className="nav-item me-3">
+                                    <Link
+                                        className="nav-link active"
+                                        to="/admin/banners"
+                                    >
+                                        Mis Banners
                                     </Link>
                                 </li>
                             }
@@ -162,13 +173,16 @@ const Navbar = () => {
                                 <li
                                     data-bs-dismiss="offcanvas"
                                     className="nav-item logout" >
-                                    <Link
+                                    <button
                                         className="nav-link"
                                         to={`/login`}
-                                        onClick={() => localStorage.removeItem("electrozona")}
+                                        onClick={() => {
+                                            localStorage.removeItem("electrozona")
+                                            window.location.reload()
+                                        }}
                                     >
                                         Cerrar Sesión <i className="ms-1 bi bi-box-arrow-right"></i>
-                                    </Link>
+                                    </button>
                                 </li>
                             }
                         </ul>
