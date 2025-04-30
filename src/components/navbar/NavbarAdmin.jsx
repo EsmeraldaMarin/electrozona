@@ -89,6 +89,7 @@ const NavbarAdmin = () => {
                     <div className="offcanvas-body">
 
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3 text-start ps-3">
+
                             <li
                                 data-bs-dismiss="offcanvas"
                                 className="nav-item me-3">
@@ -96,7 +97,17 @@ const NavbarAdmin = () => {
                                     className="nav-link active"
                                     to="/admin"
                                 >
-                                    Gestión de Productos
+                                    Mis Productos
+                                </Link>
+                            </li>
+                            <li
+                                data-bs-dismiss="offcanvas"
+                                className="nav-item me-3">
+                                <Link
+                                    className="nav-link active"
+                                    to="/admin/banners"
+                                >
+                                    Mis Banners
                                 </Link>
                             </li>
                             <li
@@ -147,29 +158,18 @@ const NavbarAdmin = () => {
                                 </li>
                             )
                             )}
-                            {credencial !== "365" ?
-                                <li
-                                    data-bs-dismiss="offcanvas"
-                                    className="nav-item login" >
-                                    <Link
-                                        className="nav-link"
-                                        to={`/login`}
-                                    >
-                                        Iniciar Sesión <i className="ms-1 bi bi-person"></i>
-                                    </Link>
-                                </li> :
-                                <li
-                                    data-bs-dismiss="offcanvas"
-                                    className="nav-item logout" >
-                                    <Link
-                                        className="nav-link"
-                                        to={`/login`}
-                                        onClick={() => localStorage.removeItem("electrozona")}
-                                    >
-                                        Cerrar Sesión <i className="ms-1 bi bi-box-arrow-right"></i>
-                                    </Link>
-                                </li>
-                            }
+                            <li
+                                data-bs-dismiss="offcanvas"
+                                className="nav-item logout" >
+                                <Link
+                                    className="nav-link"
+                                    to={`/login`}
+                                    onClick={() => localStorage.removeItem("electrozona")}
+                                >
+                                    Cerrar Sesión <i className="ms-1 bi bi-box-arrow-right"></i>
+                                </Link>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
