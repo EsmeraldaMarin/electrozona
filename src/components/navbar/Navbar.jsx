@@ -148,16 +148,29 @@ const Navbar = () => {
                                 </li>
                             )
                             )}
-                            <li
-                                data-bs-dismiss="offcanvas"
-                                className="nav-item login" >
-                                <Link
-                                    className="nav-lin"
-                                    to={`/login`}
-                                >
-                                    Iniciar Sesión <i className="ms-1 bi bi-person"></i>
-                                </Link>
-                            </li>
+                            {usuarioLogueado !== "365" ?
+                                <li
+                                    data-bs-dismiss="offcanvas"
+                                    className="nav-item login" >
+                                    <Link
+                                        className="nav-link"
+                                        to={`/login`}
+                                    >
+                                        Iniciar Sesión <i className="ms-1 bi bi-person"></i>
+                                    </Link>
+                                </li> :
+                                <li
+                                    data-bs-dismiss="offcanvas"
+                                    className="nav-item logout" >
+                                    <Link
+                                        className="nav-link"
+                                        to={`/login`}
+                                        onClick={() => localStorage.removeItem("electrozona")}
+                                    >
+                                        Cerrar Sesión <i className="ms-1 bi bi-box-arrow-right"></i>
+                                    </Link>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 .product-container {
     .header-by-category {
         @media (min-width: 990px) {
-            padding: 0 212px !important;
+            padding: 0 62px !important;
         }
         h4 {
             background-color: #000;
@@ -115,7 +115,7 @@
         grid-template-columns: repeat(2, 45%);
         justify-content: space-around;
         @media (min-width: 990px) {
-            padding: 0px 200px;
+            padding: 0px 50px;
             grid-template-columns: repeat(6, 15%);
         }
     }
