@@ -7,7 +7,7 @@ nav.navbar {
             .dropdown-menu {
                 background-color: #000;
                 li:hover {
-                    a {
+                    a, button {
                         color: #000 !important;
                     }
                 }
@@ -17,7 +17,7 @@ nav.navbar {
             &.login {
                 margin-top: 20px;
             }
-            a {
+            a, button {
                 color: white !important;
             }
         }
@@ -34,7 +34,7 @@ nav.navbar {
                     border-bottom: 2px solid white;
                     margin-bottom: 0;
                 }
-                a {
+                a, button {
                     font-size: 13px;
                     text-transform: uppercase;
                     color: white !important;
