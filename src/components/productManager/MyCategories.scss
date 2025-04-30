@@ -1,0 +1,88 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    @media (max-width: 990px) {
+        align-items: start;
+        padding-top: 100px;
+    }
+}
+
+.modal-content {
+    background: white;
+    position: relative;
+    padding: 2rem;
+    border-radius: 8px;
+    min-width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    @media (min-width: 990px) {
+        width: 70%;
+    }
+    .add-category {
+        @media (max-width: 990px) {
+            flex-direction: column;
+        }
+    }
+    .my-categories {
+        .categoria {
+            padding: 7px 10px;
+            border: 1px solid #bbb;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            @media (max-width: 990px) {
+                padding: 3px 5px;
+                button {
+                    padding: 2px 5px;
+                }
+            }
+        }
+        @media (max-width: 990px) {
+            height: 200px;
+            overflow: auto;
+        }
+    }
+    .btn-close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: #333;
+        cursor: pointer;
+
+        &:hover {
+            color: #000; // rojo
+        }
+    }
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    box-shadow: 0 0 5px #bbb;
+    @media (min-width: 990px) {
+        width: 50%;
+    }
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.modal-buttons button {
+    padding: 0.5rem 1rem;
+}

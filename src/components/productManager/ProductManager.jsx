@@ -6,6 +6,7 @@ import PriceFormatter from "../formatters/PriceFormatter"
 import CircleLoader from "../loader/CircleLoader";
 import { Link } from "react-router-dom";
 import FiltersCtn from "./FiltersCtn";
+import NewCategory from "./MyCategories";
 
 const ProductManager = () => {
     const [allProductos, setAllProductos] = useState([]);
@@ -115,8 +116,7 @@ const ProductManager = () => {
     return (
         <div className="product-manager" >
             <div className="buttons-ctn">
-                <i></i>
-                {/*<button className="btn-add">Agregar Descuento <i className="ms-2 bi bi-tags"></i></button>*/}
+                <NewCategory></NewCategory>
                 <Link to='/admin/newProduct' className="btn-add">Agregar Producto <i className="ms-2 bi bi-plus-lg"></i></Link>
             </div>
             <h1 className="mt-4">Gestión de Productos</h1>
