@@ -114,7 +114,7 @@ const ProductManager = () => {
 
     return (
         <div className="product-manager" >
-            <div className="buttons-ctn position-absolute" style={{top:"90px", right:"5%"}}>
+            <div className="buttons-ctn">
                 <i></i>
                 {/*<button className="btn-add">Agregar Descuento <i className="ms-2 bi bi-tags"></i></button>*/}
                 <Link to='/admin/newProduct' className="btn-add">Agregar Producto <i className="ms-2 bi bi-plus-lg"></i></Link>

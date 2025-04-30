@@ -7,14 +7,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     @media (min-width: 990px) {
         padding: 20px 5%;
-        .btn-ctn{
-            button{
+        .btn-ctn {
+            button {
                 max-width: fit-content !important;
                 min-width: fit-content !important;
             }
-            .desktop_disabled{
+            .desktop_disabled {
                 display: none;
-                
             }
         }
     }
@@ -23,6 +22,11 @@
         justify-content: space-between;
         align-items: center;
         padding: 20px 0;
+        @media (min-width: 990px) {
+            position: absolute;
+            top: 90px;
+            right: 5%;
+        }
         .btn-add {
             background-color: #000;
             color: #fff !important;
@@ -45,14 +49,14 @@
             border-collapse: collapse;
             background: white;
             overflow: hidden;
-            
+
             th,
             td {
                 padding: 10px;
                 border-bottom: 1px solid #ddd;
                 text-align: left;
                 @media (max-width: 990px) {
-                    font-size: 0.8em
+                    font-size: 0.8em;
                 }
             }
 
@@ -184,17 +188,17 @@
             background-color: #004332;
             background-color: #d06100;
         }
-        &.only-mobile{
+        &.only-mobile {
             display: inline-block;
         }
-        &.only-desktop{
+        &.only-desktop {
             display: none;
         }
         @media (min-width: 990px) {
-            &.only-mobile{
+            &.only-mobile {
                 display: none;
             }
-            &.only-desktop{
+            &.only-desktop {
                 display: inline-block;
             }
         }
