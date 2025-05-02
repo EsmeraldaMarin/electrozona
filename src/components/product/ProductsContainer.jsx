@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import { collection, query, orderBy, limit, startAfter, getDocs, where } from "firebase/firestore";
+import { collection, query, orderBy, startAfter, getDocs, where, getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Categories from '../filter/Categories';
 import SkeletonLoader from '../loader/SkeletonLoader';
@@ -12,6 +12,7 @@ const ProductContainer = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [lastVisible, setLastVisible] = useState(null);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState({})
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
 
@@ -72,13 +73,28 @@ const ProductContainer = () => {
         try {
             const categoryCollection = collection(db, "Categorias");
             const q = query(categoryCollection, orderBy("nombre")); // Ordenar por nombre
-    
+
             const querySnapshot = await getDocs(q);
             const categoryList = querySnapshot.docs.map(doc => doc.data());
-    
+
             setCategories(categoryList);
         } catch (error) {
             console.error("Error al obtener categorías:", error);
+        }
+    };
+    const fetchCategoryById = async (categoria) => {
+        try {
+            const categoryRef = doc(db, "Categorias", categoria);
+            const categorySnap = await getDoc(categoryRef);
+            if (categorySnap.exists()) {
+                setCategoriaSeleccionada({ id: categorySnap.id, ...categorySnap.data() })
+            } else {
+                console.error("No se encontró la categoría con ID:", categoria);
+                setCategoriaSeleccionada({})
+            }
+        } catch (error) {
+            console.error("Error al obtener categoría por ID:", error);
+            return null;
         }
     };
 
@@ -90,6 +106,9 @@ const ProductContainer = () => {
 
         fetchProducts();
         fetchCategories();
+        if (categoria) {
+            fetchCategoryById(categoria);
+        }
     }, [id]); // Dependemos de la categoría seleccionada para recargar los productos
 
     return (
@@ -98,7 +117,7 @@ const ProductContainer = () => {
                 <Categories categorias={categories}></Categories> :
                 <div className='my-4 px-3 d-flex justify-content-between align-items-center header-by-category'>
                     <Link to={"/"} className='btn rounded-0 btn-secondary text-light text-start d-inline-block '>Inicio</Link>
-                    <h4 className='m-0'>{categoria}</h4>
+                    <h4 className='m-0'>{categoriaSeleccionada.nombre}</h4>
                 </div>
             }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc } from 'firebase/firestore';
 import './MyCategories.scss';
 import axios from 'axios';
 
@@ -11,8 +11,9 @@ const MyCategories = () => {
     const [allCategorias, setAllCategorias] = useState([]);
     const [cargandoCategoria, setCargandoCategoria] = useState(false)
     const [cargandoImagen, setCargandoImagen] = useState(false);
-
-
+    const [editandoCategoriaId, setEditandoCategoriaId] = useState(null);
+    const [categoriaEditada, setCategoriaEditada] = useState({ nombre: '', nuevaImagen: null });
+    const [actualizandoCategoria, setActualizandoCategoria] = useState(false);
 
     const abrirModal = () => setModalAbierto(true);
     const cerrarModal = () => {
@@ -20,8 +21,17 @@ const MyCategories = () => {
         setModalAbierto(false);
     };
     const fetchAllCategorias = async () => {
-        const querySnapshot = await getDocs(collection(db, "Categorias"));
-        setAllCategorias(querySnapshot.docs.map(doc => doc.data()));
+        try {
+            const categoryCollection = collection(db, "Categorias");
+            const q = query(categoryCollection, orderBy("nombre")); // Ordenar por nombre
+
+            const querySnapshot = await getDocs(q);
+            const categoryList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            setAllCategorias(categoryList);
+        } catch (error) {
+            console.error("Error al obtener categorías:", error);
+        }
     };
 
     const handleAccept = async () => {
@@ -45,7 +55,9 @@ const MyCategories = () => {
             const urlImagen = await handleImageUpload(archivo);
 
             await addDoc(collection(db, 'Categorias'), { nombre, imagen: urlImagen });
+
             fetchAllCategorias();
+            setNuevaCategoria({ nombre: '', imagen: null })
         } catch (error) {
             console.error("Error al agregar categoría:", error);
             alert("Hubo un error al guardar la categoría.");
@@ -77,6 +89,40 @@ const MyCategories = () => {
         }
     };
 
+    const handleEditClick = (cat) => {
+        setEditandoCategoriaId(cat.id);
+        setCategoriaEditada({ nombre: cat.nombre, nuevaImagen: null });
+    };
+
+    const handleCancelarEdicion = () => {
+        setEditandoCategoriaId(null);
+        setCategoriaEditada({ nombre: '', nuevaImagen: null });
+    };
+    const handleGuardarEdicion = async (cat) => {
+        try {
+            setActualizandoCategoria(true)
+            let nuevaURL = cat.imagen;
+
+            if (categoriaEditada.nuevaImagen) {
+                nuevaURL = await handleImageUpload(categoriaEditada.nuevaImagen);
+            }
+
+            const categoriaRef = doc(db, 'Categorias', cat.id);
+            await updateDoc(categoriaRef, {
+                nombre: categoriaEditada.nombre,
+                imagen: nuevaURL
+            });
+
+            setEditandoCategoriaId(null);
+            setCategoriaEditada({ nombre: '', nuevaImagen: null });
+            fetchAllCategorias();
+        } catch (error) {
+            console.error("Error al actualizar categoría:", error);
+            alert("No se pudo guardar la edición.");
+        } finally {
+            setActualizandoCategoria(false)
+        }
+    };
 
     useEffect(() => {
 
@@ -129,19 +175,46 @@ const MyCategories = () => {
                         <div className='mt-5'>
                             <h5 className='text-start me-4'>Mis Categorías</h5>
                             <div className='categories-ctn'>
-                                {allCategorias.map(category =>
-                                    <div key={category.id} className='categoria'>
-                                        <div>
-                                            <img src={category.imagen} alt={`Imagen de ${category.nombre}`} />
-                                            {category.nombre}
-                                        </div>
-                                        <div>
-
-                                            <button className='btn btn-primary ms-2 rounded-0' onClick={() => { alert("Funcionalidad en desarrollo") }}><i className='bi bi-pencil'></i></button>
-                                            <button className='btn btn-danger ms-2 rounded-0' onClick={() => { alert("Funcionalidad en desarrollo") }}><i className='bi bi-trash'></i></button>
-                                        </div>
+                                {allCategorias.map(cat => (
+                                    <div key={cat.id} className='categoria d-flex align-items-center justify-content-between'>
+                                        {editandoCategoriaId === cat.id ? (
+                                            <>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) => setCategoriaEditada({ ...categoriaEditada, nuevaImagen: e.target.files[0] })}
+                                                    className='form-control me-2'
+                                                    disabled={actualizandoCategoria}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={categoriaEditada.nombre}
+                                                    onChange={(e) => setCategoriaEditada({ ...categoriaEditada, nombre: e.target.value })}
+                                                    className='form-control me-2'
+                                                    disabled={actualizandoCategoria}
+                                                />
+                                                <button className='btn btn-success me-2' disabled={actualizandoCategoria} onClick={() => handleGuardarEdicion(cat)}>Guardar</button>
+                                                <button className='btn btn-secondary' disabled={actualizandoCategoria} onClick={handleCancelarEdicion}>Cancelar</button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div className='d-flex align-items-center'>
+                                                    <img src={cat.imagen} alt={cat.nombre} width="60" className='me-3' />
+                                                    {cat.nombre}
+                                                </div>
+                                                <div>
+                                                    <button className='btn btn-primary ms-2 rounded-0' onClick={() => handleEditClick(cat)}>
+                                                        <i className='bi bi-pencil'></i>
+                                                    </button>
+                                                    <button className='btn btn-danger ms-2 rounded-0' onClick={() => alert("Funcionalidad en desarrollo")}>
+                                                        <i className='bi bi-trash'></i>
+                                                    </button>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
-                                )}
+                                ))}
+
                             </div>
                         </div>
                     </div>
