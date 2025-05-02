@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cart from '../cart/Cart';
 import { Link } from 'react-router-dom';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import "./Navbar.scss"
 
@@ -19,7 +19,9 @@ const Navbar = () => {
     const fetchCategories = async () => {
         try {
             const categoryCollection = collection(db, "Categorias");
-            const querySnapshot = await getDocs(categoryCollection);
+            const q = query(categoryCollection, orderBy("nombre")); // Ordenar por nombre
+
+            const querySnapshot = await getDocs(q);
             const categoryList = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 nombre: doc.data().nombre,
@@ -111,6 +113,18 @@ const Navbar = () => {
                                     </Link>
                                 </li>
                             }
+                            {usuarioLogueado === "365" &&
+                                <li
+                                    data-bs-dismiss="offcanvas"
+                                    className="nav-item me-3">
+                                    <Link
+                                        className="nav-link active"
+                                        to="/admin/estadisticas"
+                                    >
+                                        Estadísticas
+                                    </Link>
+                                </li>
+                            }
                             <li
                                 data-bs-dismiss="offcanvas"
                                 className="nav-item">
@@ -159,6 +173,7 @@ const Navbar = () => {
                                 </li>
                             )
                             )}
+
                             {usuarioLogueado !== "365" ?
                                 <li
                                     data-bs-dismiss="offcanvas"
@@ -185,6 +200,7 @@ const Navbar = () => {
                                     </button>
                                 </li>
                             }
+
                         </ul>
                     </div>
                 </div>

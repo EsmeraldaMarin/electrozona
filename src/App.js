@@ -16,6 +16,7 @@ import ProductEdit from './components/productManager/ProductEdit';
 import NavbarAdmin from './components/navbar/NavbarAdmin';
 import ProductAdd from './components/productManager/ProductAdd';
 import BannerManager from './components/bannerManager/BannerManager';
+import EstadisticasManager from './components/estadisticas/EstadisticasManager';
 
 // Layout para rutas de admin (oculta Navbar y WhatsAppFloat)
 const AdminLayout = () => {
@@ -58,6 +59,7 @@ function App() {
                 <Route path="product/:id" end={true} element={<ProductEdit />} />
                 <Route path="newProduct/" end={true}  element={<ProductAdd />} />
                 <Route path="banners/" end={true} element={<BannerManager />} />
+                <Route path="estadisticas/" end={true} element={<EstadisticasManager />} />
               </Route>
             </Route>
 

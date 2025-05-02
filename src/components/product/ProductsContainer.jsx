@@ -71,8 +71,11 @@ const ProductContainer = () => {
     const fetchCategories = async () => {
         try {
             const categoryCollection = collection(db, "Categorias");
-            const querySnapshot = await getDocs(categoryCollection);
-            const categoryList = querySnapshot.docs.map(doc => doc.data()); // Suponiendo que el campo de nombre de categoría es "name"
+            const q = query(categoryCollection, orderBy("nombre")); // Ordenar por nombre
+    
+            const querySnapshot = await getDocs(q);
+            const categoryList = querySnapshot.docs.map(doc => doc.data());
+    
             setCategories(categoryList);
         } catch (error) {
             console.error("Error al obtener categorías:", error);

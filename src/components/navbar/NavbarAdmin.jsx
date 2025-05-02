@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cart from '../cart/Cart';
 import { Link } from 'react-router-dom';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import "./Navbar.scss"
 
@@ -16,11 +16,12 @@ const NavbarAdmin = () => {
         setIsOpen(!isOpen);
     };
 
-    // Función para cargar las categorías
     const fetchCategories = async () => {
         try {
             const categoryCollection = collection(db, "Categorias");
-            const querySnapshot = await getDocs(categoryCollection);
+            const q = query(categoryCollection, orderBy("nombre")); // Ordenar por nombre
+
+            const querySnapshot = await getDocs(q);
             const categoryList = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 nombre: doc.data().nombre,
@@ -30,6 +31,7 @@ const NavbarAdmin = () => {
             console.error("Error al obtener categorías:", error);
         }
     };
+
 
     useEffect(() => {
         fetchCategories();
@@ -90,6 +92,7 @@ const NavbarAdmin = () => {
 
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3 text-start ps-3">
 
+
                             <li
                                 data-bs-dismiss="offcanvas"
                                 className="nav-item me-3">
@@ -108,6 +111,16 @@ const NavbarAdmin = () => {
                                     to="/admin/banners"
                                 >
                                     Mis Banners
+                                </Link>
+                            </li>
+                            <li
+                                data-bs-dismiss="offcanvas"
+                                className="nav-item me-3">
+                                <Link
+                                    className="nav-link active"
+                                    to="/admin/estadisticas"
+                                >
+                                    Estadísticas
                                 </Link>
                             </li>
                             <li
@@ -158,6 +171,7 @@ const NavbarAdmin = () => {
                                 </li>
                             )
                             )}
+
                             <li
                                 data-bs-dismiss="offcanvas"
                                 className="nav-item logout" >
