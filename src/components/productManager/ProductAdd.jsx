@@ -26,7 +26,10 @@ const ProductAdd = () => {
     useEffect(() => {
         const fetchAllCategorias = async () => {
             const querySnapshot = await getDocs(collection(db, "Categorias"));
-            setAllCategorias(querySnapshot.docs.map(doc => doc.data().nombre));
+            setAllCategorias(querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            })));
         };
         fetchAllCategorias();
     }, []);
@@ -239,7 +242,7 @@ const ProductAdd = () => {
                         >
                             <option value="">Selecciona una categoría</option>
                             {allCategorias?.map((cat, index) => (
-                                <option key={index} value={cat}>{cat}</option>
+                                <option key={index} value={cat.id}>{cat.nombre}</option>
                             ))}
                         </select>
                     </div>

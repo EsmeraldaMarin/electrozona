@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
-import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc } from 'firebase/firestore';
+import { collection, setDoc, getDocs, query, orderBy, doc, updateDoc } from 'firebase/firestore';
 import './MyCategories.scss';
 import axios from 'axios';
 
@@ -54,7 +54,7 @@ const MyCategories = () => {
         try {
             const urlImagen = await handleImageUpload(archivo);
 
-            await addDoc(collection(db, 'Categorias'), { nombre, imagen: urlImagen });
+            await setDoc(doc(db, 'Categorias', nombre), { nombre, imagen: urlImagen });
 
             fetchAllCategorias();
             setNuevaCategoria({ nombre: '', imagen: null })

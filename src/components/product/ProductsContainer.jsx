@@ -18,6 +18,7 @@ const ProductContainer = () => {
 
     const { id } = useParams();
     const categoria = id;
+    console.log(categoria)
     const productsPerPage = 20;
 
     // Función para cargar productos
@@ -75,10 +76,14 @@ const ProductContainer = () => {
             const q = query(categoryCollection, orderBy("nombre")); // Ordenar por nombre
 
             const querySnapshot = await getDocs(q);
-            const categoryList = querySnapshot.docs.map(doc => doc.data());
-
+            const categoryList = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }))
             setCategories(categoryList);
-        } catch (error) {
+        }
+
+        catch (error) {
             console.error("Error al obtener categorías:", error);
         }
     };
@@ -117,7 +122,7 @@ const ProductContainer = () => {
                 <Categories categorias={categories}></Categories> :
                 <div className='my-4 px-3 d-flex justify-content-between align-items-center header-by-category'>
                     <Link to={"/"} className='btn rounded-0 btn-secondary text-light text-start d-inline-block '>Inicio</Link>
-                    <h4 className='m-0'>{categoriaSeleccionada.nombre}</h4>
+                    <h4 className='m-0 fs-4'>{categoriaSeleccionada.nombre}</h4>
                 </div>
             }
 
